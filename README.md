@@ -4,13 +4,20 @@ Data from reference monitor:
 Costly reference monitor data is contained in the file named CAAQMS_MPCB. Data from 15 places around Mumbai City is included in this. This time series has an hourly sampling rate, meaning that there are 24 samples 
 in total every day in this dataset. Four fundamental features are present in each data sample of this dataset: temperature, humidity, PM2.5, and PM10.
 
-Data from low-cost sensors:
-1) Respirer: This is a low-cost sensor. Data gathered from this low-cost sensor is contained in the file named respirer_hourly_data. There are just 11 locations in Mumbai city where this sensor has data.
-   Both the base features and the sample rate are identical to the reference monitor.
 
-3) Oizom: This is an additional low-cost sensor. The data gathered from this low-cost sensor is contained in the file labelled with OIZOM. There are only three locations in Mumbai city where this sensor has
-   data. Both the base features and the sample rate are identical to the reference monitor.
+# Project
 
-5) Paqs: The final low-cost sensor was installed in two different parts of Mumbai. The low-cost sensor's data is contained in a file named old_paqs. Both the base features and the sample rate are identical to
-   the reference monitor.
+This is a project done as part of the Project course for AI/ML Emasters. We are only concerned with CAAQMS_MPCB data for the project as it is a high quality dataset.
 
+The overall goal of this project is to predict the PM2.5 concentration in the air using the current CAAQMS_MPCB data for:
+1. Next 5 hours
+2. Next 12 hours
+3. Next 24 hours
+4. Next 48 hours
+5. Next 72 hours
+6. Next 168 hours
+
+
+This is to predict and validate the model and it's accuracy over a period of time
+
+For stretch goal we will predict the PM2.5 concentration in air for one locality using current spatial data in addition to current data. As we have information for localities around Mumbai, we can use this information to predict the PM2.5 concentration in air for one of these localities using information on other localities around Mumbai.
