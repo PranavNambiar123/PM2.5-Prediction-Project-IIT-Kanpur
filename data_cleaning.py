@@ -11,27 +11,19 @@ class DataCleaner:
         """
         Initialize with dictionary of DataFrames for each locality
         """
-        # Standardize column names and keep only numeric columns
         self.raw_data = {}
         for locality, df in data_dict.items():
             df = df.copy()
-            # Keep only the columns we're interested in
             columns_to_keep = ['PM2.5', 'PM10', 'RH']
             if 'Temp' in df.columns:
                 df['AT'] = df['Temp']
-            
-            # Add AT if it exists
             if 'AT' in df.columns:
                 columns_to_keep.append('AT')
-            
-            # Filter columns
             df = df[columns_to_keep]
             self.raw_data[locality] = df
         
         self.cleaned_data = None
         self.method = None
-        
-        # Create output directory for cleaned data
         os.makedirs('cleaned_data', exist_ok=True)
     
     def clean_by_statistical_measure(self, measure: str = 'mean'):
@@ -51,7 +43,7 @@ class DataCleaner:
                     fill_value = df[column].mean()
                 elif measure == 'median':
                     fill_value = df[column].median()
-                else:  # mode
+                else:
                     fill_value = df[column].mode()[0] if not df[column].mode().empty else np.nan
                 
                 df_cleaned[column] = df_cleaned[column].fillna(fill_value)
@@ -86,13 +78,8 @@ class DataCleaner:
             df_cleaned = df.copy()
             
             for column in df.select_dtypes(include=[np.number]).columns:
-                # Interpolate values
                 df_cleaned[column] = df_cleaned[column].interpolate(method='linear')
-                
-                # Forward fill any remaining NaN at the start
                 df_cleaned[column] = df_cleaned[column].fillna(method='ffill')
-                
-                # Backward fill any remaining NaN at the end
                 df_cleaned[column] = df_cleaned[column].fillna(method='bfill')
             
             cleaned_dict[locality] = df_cleaned
@@ -107,31 +94,25 @@ class DataCleaner:
         self.method = 'spatial_average'
         cleaned_dict = {}
         
-        # First, create a copy of the raw data
         for locality, df in self.raw_data.items():
             cleaned_dict[locality] = df.copy()
         
-        # For each timestamp and each locality
         for locality in self.raw_data.keys():
             df = cleaned_dict[locality]
             
             for column in df.select_dtypes(include=[np.number]).columns:
-                # For each missing value
                 missing_idx = df[column].isna()
                 
                 if missing_idx.any():
-                    # Get values from other localities for the same timestamps
                     for idx in df[missing_idx].index:
                         values_at_timestamp = []
                         
-                        # Collect non-null values from other localities
                         for other_locality, other_df in self.raw_data.items():
                             if other_locality != locality and idx in other_df.index:
                                 val = other_df.loc[idx, column]
                                 if pd.notna(val):
                                     values_at_timestamp.append(val)
                         
-                        # Fill with mean if we have values from other localities
                         if values_at_timestamp:
                             df.loc[idx, column] = np.mean(values_at_timestamp)
             
@@ -146,26 +127,21 @@ class DataCleaner:
         """
         plt.figure(figsize=(15, 10))
         
-        # Original data
         original = self.raw_data[locality][feature]
         plt.plot(original.index, original.values, 'o', label='Original', alpha=0.3, markersize=2)
         
-        # Mean
         self.clean_by_statistical_measure('mean')
         mean_cleaned = self.cleaned_data[locality][feature]
         plt.plot(mean_cleaned.index, mean_cleaned.values, label='Mean', alpha=0.7)
         
-        # Median
         self.clean_by_statistical_measure('median')
         median_cleaned = self.cleaned_data[locality][feature]
         plt.plot(median_cleaned.index, median_cleaned.values, label='Median', alpha=0.7)
         
-        # Linear interpolation
         self.clean_by_linear_interpolation()
         interp_cleaned = self.cleaned_data[locality][feature]
         plt.plot(interp_cleaned.index, interp_cleaned.values, label='Linear Interpolation', alpha=0.7)
         
-        # Spatial average
         self.clean_by_spatial_average()
         spatial_cleaned = self.cleaned_data[locality][feature]
         plt.plot(spatial_cleaned.index, spatial_cleaned.values, label='Spatial Average', alpha=0.7)
@@ -177,7 +153,6 @@ class DataCleaner:
         plt.grid(True, alpha=0.3)
         plt.tight_layout()
         
-        # Save plot
         plt.savefig(f'cleaned_data/comparison_{locality}_{feature}.png', dpi=300, bbox_inches='tight')
         plt.close()
     
@@ -192,20 +167,16 @@ class DataCleaner:
             df.to_csv(f'cleaned_data/{locality}_{self.method}.csv')
 
 def main():
-    # Load the data
     print("Loading data...")
     data_dict = load_all_localities_data()
     
-    # Initialize cleaner
     cleaner = DataCleaner(data_dict)
     
-    # Compare methods for each locality
     print("\nGenerating comparison plots...")
     for locality in data_dict.keys():
         print(f"Processing {locality}...")
         cleaner.compare_methods(locality)
     
-    # Generate cleaned datasets using each method
     print("\nGenerating cleaned datasets...")
     
     print("1. Mean imputation")

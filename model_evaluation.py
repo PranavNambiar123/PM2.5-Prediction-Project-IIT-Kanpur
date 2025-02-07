@@ -22,22 +22,17 @@ class ModelEvaluator:
         """
         cleaned_data = {}
         
-        # Get all CSV files from cleaned_data directory
         csv_files = glob(os.path.join('cleaned_data', '*.csv'))
         
         for file_path in csv_files:
-            # Extract method and locality from filename
             filename = os.path.basename(file_path)
             locality, method = filename.replace('.csv', '').split('_', 1)
             
-            # Load the data
             df = pd.read_csv(file_path)
-            # Check if index is already datetime
             if 'Unnamed: 0' in df.columns:
                 df.set_index(pd.to_datetime(df['Unnamed: 0']), inplace=True)
                 df.drop('Unnamed: 0', axis=1, inplace=True)
             
-            # Initialize method dict if not exists
             if method not in cleaned_data:
                 cleaned_data[method] = {}
             
@@ -49,7 +44,6 @@ class ModelEvaluator:
         """
         Prepare features and target for modeling
         """
-        # Use all numeric columns except PM2.5 to predict PM2.5
         feature_cols = [col for col in df.select_dtypes(include=[np.number]).columns 
                        if col != 'PM2.5']
         
@@ -64,10 +58,8 @@ class ModelEvaluator:
         """
         Split data into train, validation, and test sets (70-15-15)
         """
-        # First split: 70% train, 30% remaining
         X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42)
         
-        # Second split: Split remaining 30% into half (15% each for validation and test)
         X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
         
         return X_train, X_val, X_test, y_train, y_val, y_test
@@ -77,38 +69,31 @@ class ModelEvaluator:
         Evaluate a single locality's data
         """
         try:
-            # Drop any remaining NaN values
             df = df.dropna()
             
-            # Skip if not enough data
             if len(df) < 100:  # arbitrary minimum size
                 print(f"Skipping {locality} due to insufficient data (only {len(df)} samples)")
                 return None
                 
             X, y = self.prepare_features(df)
             
-            # Skip if no features available
             if X.shape[1] == 0:
                 print(f"Skipping {locality} due to no valid features")
                 return None
                 
             X_train, X_val, X_test, y_train, y_val, y_test = self.split_data(X, y)
             
-            # Train model
             model = LinearRegression()
             model.fit(X_train, y_train)
             
-            # Store model for later use
             if method not in self.models:
                 self.models[method] = {}
             self.models[method][locality] = model
             
-            # Make predictions
             y_train_pred = model.predict(X_train)
             y_val_pred = model.predict(X_val)
             y_test_pred = model.predict(X_test)
             
-            # Calculate metrics
             metrics = {
                 'train_rmse': np.sqrt(mean_squared_error(y_train, y_train_pred)),
                 'val_rmse': np.sqrt(mean_squared_error(y_val, y_val_pred)),
@@ -142,7 +127,7 @@ class ModelEvaluator:
                 if metrics is not None:
                     method_results[locality] = metrics
             
-            if method_results:  # Only store if we have results
+            if method_results:
                 self.results[method] = method_results
     
     def plot_comparison(self):
@@ -153,10 +138,8 @@ class ModelEvaluator:
             print("No results to plot!")
             return
             
-        # Create directory for results
         os.makedirs('model_results', exist_ok=True)
         
-        # Prepare data for plotting
         methods = list(self.results.keys())
         metrics = ['test_rmse', 'test_mae', 'test_r2']
         metric_names = ['RMSE', 'MAE', 'R²']
@@ -169,11 +152,11 @@ class ModelEvaluator:
             for method in methods:
                 values = [self.results[method][locality][metric] 
                          for locality in self.results[method].keys()]
-                if values:  # Only add if we have values
+                if values:
                     data.append(values)
                     labels.extend([method] * len(values))
             
-            if data:  # Only plot if we have data
+            if data:
                 plt.boxplot(data, labels=methods)
                 plt.title(f'Comparison of {metric_name} Across Cleaning Methods')
                 plt.ylabel(metric_name)
@@ -183,7 +166,6 @@ class ModelEvaluator:
                 plt.savefig(f'model_results/comparison_{metric}.png', dpi=300, bbox_inches='tight')
                 plt.close()
         
-        # Save numerical results
         results_df = pd.DataFrame()
         for method in methods:
             method_data = pd.DataFrame(self.results[method]).T

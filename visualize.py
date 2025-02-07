@@ -14,7 +14,6 @@ def plot_pm25_time_series(data_dict, save=True):
     """Plot PM2.5 time series for all localities"""
     plt.figure(figsize=(15, 8))
     for locality, df in data_dict.items():
-        # Resample to daily mean to reduce noise
         daily_mean = df['PM2.5'].resample('D').mean()
         plt.plot(daily_mean.index, daily_mean.values, label=locality, alpha=0.7)
     
@@ -81,7 +80,6 @@ def plot_daily_patterns(data_dict, save=True):
 def plot_correlation_heatmaps(data_dict, save=True):
     """Plot correlation heatmaps for each locality"""
     for locality, df in data_dict.items():
-        # Select only numeric columns
         numeric_cols = df.select_dtypes(include=[np.number]).columns
         if len(numeric_cols) < 2:
             continue
@@ -135,7 +133,6 @@ def plot_seasonal_comparison(data_dict, save=True):
     plt.figure(figsize=(15, 8))
     
     for locality, df in data_dict.items():
-        # Define seasons (for Mumbai context)
         df['season'] = pd.cut(df.index.month, 
                             bins=[0, 2, 5, 9, 12],
                             labels=['Winter', 'Summer', 'Monsoon', 'Post-Monsoon'])
