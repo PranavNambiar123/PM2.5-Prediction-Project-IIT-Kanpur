@@ -96,38 +96,30 @@ class LSTMPredictor:
         
     def prepare_sequences(self, data):
         """
-        Prepare sequences for LSTM training with enhanced feature engineering
+        Prepare sequences for LSTM training with optimized feature engineering
         """
         start_time = time.time()
         logging.info(f"Preparing sequences from data with shape: {data.shape}")
         
-        # Add time-based features
-        data = data.copy()
-        data['hour'] = data.index.hour.astype(float)
-        data['day'] = data.index.day.astype(float)
-        data['month'] = data.index.month.astype(float)
+        # Create a copy with only essential features
+        data = data[['PM2.5', 'PM10', 'RH', 'AT']].copy()
         
-        # Add cyclical time features
-        data['hour_sin'] = np.sin(2 * np.pi * data['hour'] / 24)
-        data['hour_cos'] = np.cos(2 * np.pi * data['hour'] / 24)
+        # Add essential time-based features
+        data['hour'] = data.index.hour.astype(np.float32)
         
-        # Enhanced rolling features
+        # Add cyclical time features (more efficient encoding of time)
+        data['hour_sin'] = np.sin(2 * np.pi * data['hour'] / 24).astype(np.float32)
+        data['hour_cos'] = np.cos(2 * np.pi * data['hour'] / 24).astype(np.float32)
+        
+        # Add only the most important rolling features
         data['rolling_mean_6h'] = data['PM2.5'].rolling(window=6).mean()
-        data['rolling_mean_12h'] = data['PM2.5'].rolling(window=12).mean()
-        data['rolling_mean_24h'] = data['PM2.5'].rolling(window=24).mean()
         data['rolling_std_6h'] = data['PM2.5'].rolling(window=6).std()
-        data['rolling_std_12h'] = data['PM2.5'].rolling(window=12).std()
-        data['rolling_max_6h'] = data['PM2.5'].rolling(window=6).max()
-        data['rolling_min_6h'] = data['PM2.5'].rolling(window=6).min()
         
-        # Add lag features
+        # Add essential lag feature
         data['lag_1h'] = data['PM2.5'].shift(1)
-        data['lag_3h'] = data['PM2.5'].shift(3)
-        data['lag_6h'] = data['PM2.5'].shift(6)
         
-        # Add rate of change features
+        # Add key rate of change
         data['rate_of_change_1h'] = data['PM2.5'].diff(1)
-        data['rate_of_change_3h'] = data['PM2.5'].diff(3)
         
         # Fill NaN values from rolling calculations
         data = data.fillna(method='bfill')
@@ -228,7 +220,7 @@ class LSTMPredictor:
         logging.info("Model architecture:")
         self.model.summary(print_fn=logging.info)
 
-    def train_model(self, train_data, validation_split=0.2, epochs=100, batch_size=32):
+    def train_model(self, train_data, validation_split=0.2, epochs=50, batch_size=16):
         """
         Train the LSTM model
         Args:
@@ -246,11 +238,12 @@ class LSTMPredictor:
         if self.model is None:
             self.build_model(input_shape=(X.shape[1], X.shape[2]))
         
-        # Setup callbacks
+        # Setup callbacks with optimized parameters
         early_stopping = EarlyStopping(
             monitor='val_loss',
-            patience=10,
-            restore_best_weights=True
+            patience=5,  # Reduced patience for faster training
+            restore_best_weights=True,
+            min_delta=0.001  # Minimum improvement required
         )
         
         model_checkpoint = ModelCheckpoint(
@@ -399,10 +392,13 @@ class LSTMPredictor:
 
 def main():
     """
-    Main function to demonstrate LSTM predictor usage
+    Main function to demonstrate LSTM predictor usage with optimized parameters
     """
     start_time = time.time()
     logging.info("Starting LSTM predictor main execution")
+    
+    # Clear any existing TF session
+    tf.keras.backend.clear_session()
     
     csv_files = glob(os.path.join('cleaned_data', '*.csv'))
     localities = []
@@ -416,10 +412,13 @@ def main():
     
     for locality in localities:
         try:
-            # Create predictor with adjusted parameters
+            # Clear memory between localities
+            tf.keras.backend.clear_session()
+            
+            # Create predictor with optimized parameters
             predictor = LSTMPredictor(
                 locality=locality,
-                sequence_length=24,  # Use 24 hours of historical data
+                sequence_length=12,  # Reduced sequence length
                 prediction_horizon=6  # Keep 6-hour prediction
             )
             
