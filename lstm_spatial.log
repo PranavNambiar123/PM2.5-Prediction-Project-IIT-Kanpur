@@ -8875,3 +8875,149 @@ ValueError: All arrays must be of the same length
 2025-03-28 18:21:36,925 - root - INFO - Summary saved to all_localities_summary_20250328_182136.csv
 2025-03-28 18:21:37,148 - root - INFO - Summary plot saved to all_localities_summary_20250328_182137.png
 2025-03-28 18:21:37,150 - root - INFO - Total execution time: 9.39 seconds
+2025-03-28 18:31:24,696 - root - INFO - Processing specific localities: Bandra, Kurla, Powai
+2025-03-28 18:31:24,696 - root - INFO - Processing locality 1/3: Bandra
+2025-03-28 18:31:24,697 - root - INFO - Running prediction for Bandra
+2025-03-28 18:31:24,697 - root - INFO - Parameters: sequence_length=24, prediction_horizon=5
+2025-03-28 18:31:24,697 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 18:31:24,700 - root - INFO - Found 12 nearby localities for Bandra
+2025-03-28 18:31:24,700 - root - INFO -   - Dharavi: 2.26 km, weight: 0.3231
+2025-03-28 18:31:24,700 - root - INFO -   - Sion: 2.60 km, weight: 0.2723
+2025-03-28 18:31:24,700 - root - INFO -   - Dadar: 4.14 km, weight: 0.1262
+2025-03-28 18:31:24,700 - root - INFO -   - Kurla: 4.30 km, weight: 0.1163
+2025-03-28 18:31:24,700 - root - INFO -   - Airport: 4.67 km, weight: 0.0967
+2025-03-28 18:31:24,700 - root - INFO -   - Vileparle: 4.99 km, weight: 0.0826
+2025-03-28 18:31:24,700 - root - INFO -   - Vile Parle: 4.99 km, weight: 0.0825
+2025-03-28 18:31:24,701 - root - INFO -   - Worli: 5.33 km, weight: 0.0697
+2025-03-28 18:31:24,701 - root - INFO -   - Juhu: 5.91 km, weight: 0.0520
+2025-03-28 18:31:24,701 - root - INFO -   - Chembur: 6.08 km, weight: 0.0479
+2025-03-28 18:31:24,701 - root - INFO -   - Andheri: 7.19 km, weight: 0.0274
+2025-03-28 18:31:24,701 - root - INFO -   - Powai: 9.98 km, weight: 0.0068
+2025-03-28 18:31:24,701 - root - INFO - Initializing LSTM Predictor for Bandra
+2025-03-28 18:31:24,701 - root - INFO - Sequence length: 24, Prediction horizon: 5
+2025-03-28 18:31:24,702 - root - INFO - Loading cleaned data from spatial_cleaned_data\Bandra_spatial_weighted.csv
+2025-03-28 18:31:24,713 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 18:31:24,714 - root - INFO - No missing PM2.5 values found
+2025-03-28 18:31:24,714 - root - INFO - Loaded cleaned data with shape: (5441, 4)
+2025-03-28 18:31:24,714 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 18:31:24,715 - root - INFO - Loaded data with shape: (5441, 4)
+2025-03-28 18:31:24,715 - root - INFO - Found alternative model at models/lstm_Bandra_ph6.keras
+2025-03-28 18:31:24,715 - root - INFO - Loading model from models/lstm_Bandra_ph6.keras
+2025-03-28 18:31:24,924 - root - INFO - Model loaded successfully
+2025-03-28 18:31:24,925 - root - INFO - Using most recent 24 data points for prediction
+2025-03-28 18:31:24,925 - root - INFO - Making predictions for Bandra
+2025-03-28 18:31:24,925 - root - INFO - Preparing sequences from data with shape: (5441, 4)
+2025-03-28 18:31:24,941 - root - INFO - Creating 5413 sequences...
+2025-03-28 18:31:24,951 - root - INFO - Sequence preparation completed. X shape: (5413, 24, 22), y shape: (5413, 5)
+2025-03-28 18:31:24,952 - root - INFO - Sequence preparation took 0.03 seconds
+2025-03-28 18:31:25,304 - root - INFO - Prediction completed in 0.35 seconds
+2025-03-28 18:31:25,309 - root - INFO - Predictions saved to predictions/Bandra_predictions_20250328_183125.csv
+2025-03-28 18:31:25,311 - root - INFO - Simulated actual values saved to actual_values/Bandra_actual_20250328_183125.csv
+2025-03-28 18:31:25,592 - root - INFO - Plot saved to all_localities_plots/Bandra_comparison_20250328_183125.png
+2025-03-28 18:31:25,593 - root - INFO - Processing locality 2/3: Kurla
+2025-03-28 18:31:25,593 - root - INFO - Running prediction for Kurla
+2025-03-28 18:31:25,593 - root - INFO - Parameters: sequence_length=24, prediction_horizon=5
+2025-03-28 18:31:25,594 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 18:31:25,596 - root - INFO - Found 12 nearby localities for Kurla
+2025-03-28 18:31:25,597 - root - INFO -   - Chembur: 2.27 km, weight: 0.3211
+2025-03-28 18:31:25,597 - root - INFO -   - Sion: 2.71 km, weight: 0.2574
+2025-03-28 18:31:25,597 - root - INFO -   - Airport: 3.04 km, weight: 0.2185
+2025-03-28 18:31:25,597 - root - INFO -   - Dharavi: 3.21 km, weight: 0.2009
+2025-03-28 18:31:25,597 - root - INFO -   - Bandra: 4.30 km, weight: 0.1163
+2025-03-28 18:31:25,597 - root - INFO -   - Vileparle: 5.34 km, weight: 0.0694
+2025-03-28 18:31:25,597 - root - INFO -   - Vile Parle: 5.34 km, weight: 0.0694
+2025-03-28 18:31:25,597 - root - INFO -   - Dadar: 6.50 km, weight: 0.0388
+2025-03-28 18:31:25,598 - root - INFO -   - Powai: 6.57 km, weight: 0.0374
+2025-03-28 18:31:25,598 - root - INFO -   - Andheri: 6.94 km, weight: 0.0312
+2025-03-28 18:31:25,598 - root - INFO -   - Juhu: 7.15 km, weight: 0.0281
+2025-03-28 18:31:25,599 - root - INFO -   - Worli: 8.80 km, weight: 0.0123
+2025-03-28 18:31:25,599 - root - INFO - Initializing LSTM Predictor for Kurla
+2025-03-28 18:31:25,599 - root - INFO - Sequence length: 24, Prediction horizon: 5
+2025-03-28 18:31:25,599 - root - INFO - Loading cleaned data from spatial_cleaned_data\Kurla_spatial_weighted.csv
+2025-03-28 18:31:25,611 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 18:31:25,611 - root - INFO - No missing PM2.5 values found
+2025-03-28 18:31:25,612 - root - INFO - Loaded cleaned data with shape: (5425, 4)
+2025-03-28 18:31:25,613 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 18:31:25,613 - root - INFO - Loaded data with shape: (5425, 4)
+2025-03-28 18:31:25,613 - root - INFO - Found alternative model at models/lstm_Kurla_ph6.keras
+2025-03-28 18:31:25,613 - root - INFO - Loading model from models/lstm_Kurla_ph6.keras
+2025-03-28 18:31:25,779 - root - INFO - Model loaded successfully
+2025-03-28 18:31:25,780 - root - INFO - Using most recent 24 data points for prediction
+2025-03-28 18:31:25,780 - root - INFO - Making predictions for Kurla
+2025-03-28 18:31:25,780 - root - INFO - Preparing sequences from data with shape: (5425, 4)
+2025-03-28 18:31:25,794 - root - INFO - Creating 5397 sequences...
+2025-03-28 18:31:25,803 - root - INFO - Sequence preparation completed. X shape: (5397, 24, 22), y shape: (5397, 5)
+2025-03-28 18:31:25,804 - root - INFO - Sequence preparation took 0.02 seconds
+2025-03-28 18:31:26,153 - root - INFO - Prediction completed in 0.35 seconds
+2025-03-28 18:31:26,156 - root - INFO - Predictions saved to predictions/Kurla_predictions_20250328_183126.csv
+2025-03-28 18:31:26,158 - root - INFO - Simulated actual values saved to actual_values/Kurla_actual_20250328_183126.csv
+2025-03-28 18:31:26,354 - root - INFO - Plot saved to all_localities_plots/Kurla_comparison_20250328_183126.png
+2025-03-28 18:31:26,354 - root - INFO - Processing locality 3/3: Powai
+2025-03-28 18:31:26,355 - root - INFO - Running prediction for Powai
+2025-03-28 18:31:26,355 - root - INFO - Parameters: sequence_length=24, prediction_horizon=5
+2025-03-28 18:31:26,355 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 18:31:26,358 - root - INFO - Found 12 nearby localities for Powai
+2025-03-28 18:31:26,358 - root - INFO -   - Airport: 5.45 km, weight: 0.0656
+2025-03-28 18:31:26,358 - root - INFO -   - Andheri: 6.41 km, weight: 0.0405
+2025-03-28 18:31:26,358 - root - INFO -   - Kurla: 6.57 km, weight: 0.0374
+2025-03-28 18:31:26,358 - root - INFO -   - Vile Parle: 6.98 km, weight: 0.0305
+2025-03-28 18:31:26,358 - root - INFO -   - Vileparle: 6.98 km, weight: 0.0304
+2025-03-28 18:31:26,358 - root - INFO -   - Chembur: 7.14 km, weight: 0.0281
+2025-03-28 18:31:26,358 - root - INFO -   - Mulund: 7.84 km, weight: 0.0198
+2025-03-28 18:31:26,358 - root - INFO -   - Juhu: 8.50 km, weight: 0.0143
+2025-03-28 18:31:26,359 - root - INFO -   - Sion: 9.24 km, weight: 0.0099
+2025-03-28 18:31:26,359 - root - INFO -   - Dharavi: 9.69 km, weight: 0.0079
+2025-03-28 18:31:26,359 - root - INFO -   - Malad: 9.74 km, weight: 0.0077
+2025-03-28 18:31:26,359 - root - INFO -   - Bandra: 9.98 km, weight: 0.0068
+2025-03-28 18:31:26,360 - root - INFO - Initializing LSTM Predictor for Powai
+2025-03-28 18:31:26,360 - root - INFO - Sequence length: 24, Prediction horizon: 5
+2025-03-28 18:31:26,360 - root - INFO - Loading cleaned data from spatial_cleaned_data\Powai_spatial_weighted.csv
+2025-03-28 18:31:26,370 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 18:31:26,370 - root - INFO - No missing PM2.5 values found
+2025-03-28 18:31:26,371 - root - INFO - Loaded cleaned data with shape: (5425, 4)
+2025-03-28 18:31:26,371 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 18:31:26,371 - root - INFO - Loaded data with shape: (5425, 4)
+2025-03-28 18:31:26,371 - root - INFO - Found alternative model at models/lstm_Powai_ph6.keras
+2025-03-28 18:31:26,371 - root - INFO - Loading model from models/lstm_Powai_ph6.keras
+2025-03-28 18:31:26,499 - root - INFO - Model loaded successfully
+2025-03-28 18:31:26,500 - root - INFO - Using most recent 24 data points for prediction
+2025-03-28 18:31:26,501 - root - INFO - Making predictions for Powai
+2025-03-28 18:31:26,501 - root - INFO - Preparing sequences from data with shape: (5425, 4)
+2025-03-28 18:31:26,516 - root - INFO - Creating 5397 sequences...
+2025-03-28 18:31:26,525 - root - INFO - Sequence preparation completed. X shape: (5397, 24, 22), y shape: (5397, 5)
+2025-03-28 18:31:26,526 - root - INFO - Sequence preparation took 0.03 seconds
+2025-03-28 18:31:26,841 - root - INFO - Prediction completed in 0.32 seconds
+2025-03-28 18:31:26,845 - root - INFO - Predictions saved to predictions/Powai_predictions_20250328_183126.csv
+2025-03-28 18:31:26,846 - root - INFO - Simulated actual values saved to actual_values/Powai_actual_20250328_183126.csv
+2025-03-28 18:31:27,034 - root - INFO - Plot saved to all_localities_plots/Powai_comparison_20250328_183126.png
+2025-03-28 18:31:27,037 - root - INFO - Summary saved to selected_localities_summary_20250328_183127.csv
+2025-03-28 18:31:27,038 - root - INFO - Total execution time: 2.34 seconds
+2025-03-28 18:43:50,982 - root - INFO - Running prediction for Dadar
+2025-03-28 18:43:50,983 - root - INFO - Parameters: sequence_length=24, prediction_horizon=5
+2025-03-28 18:43:50,983 - root - INFO - Spatial parameters: decay_factor=0.5, max_distance=10.0
+2025-03-28 18:43:50,983 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 18:43:50,986 - root - INFO - Found 10 nearby localities for Dadar
+2025-03-28 18:43:50,986 - root - INFO -   - Worli: 2.79 km, weight: 0.2484
+2025-03-28 18:43:50,986 - root - INFO -   - Dharavi: 3.35 km, weight: 0.1876
+2025-03-28 18:43:50,987 - root - INFO -   - Sion: 3.79 km, weight: 0.1501
+2025-03-28 18:43:50,987 - root - INFO -   - Bandra: 4.14 km, weight: 0.1262
+2025-03-28 18:43:50,987 - root - INFO -   - Kurla: 6.50 km, weight: 0.0388
+2025-03-28 18:43:50,987 - root - INFO -   - Chembur: 7.03 km, weight: 0.0297
+2025-03-28 18:43:50,987 - root - INFO -   - Malabar Hill: 7.85 km, weight: 0.0198
+2025-03-28 18:43:50,987 - root - INFO -   - Airport: 8.28 km, weight: 0.0159
+2025-03-28 18:43:50,987 - root - INFO -   - Vileparle: 9.10 km, weight: 0.0106
+2025-03-28 18:43:50,987 - root - INFO -   - Vile Parle: 9.10 km, weight: 0.0106
+2025-03-28 18:43:50,988 - root - INFO - Initializing LSTM Predictor for Dadar
+2025-03-28 18:43:50,988 - root - INFO - Sequence length: 24, Prediction horizon: 5
+2025-03-28 18:43:50,989 - root - WARNING - No spatial weighted data found for locality Dadar, checking regular cleaned data
+2025-03-28 18:43:50,989 - root - ERROR - Error in prediction: No cleaned data found for locality Dadar
+2025-03-28 18:43:50,990 - root - ERROR - Traceback (most recent call last):
+  File "C:\Users\Pranav\Desktop\IIT Kanpur\project\2022_SSDA_airquality\run_prediction.py", line 180, in main
+    run_prediction(
+  File "C:\Users\Pranav\Desktop\IIT Kanpur\project\2022_SSDA_airquality\run_prediction.py", line 45, in run_prediction
+    data = predictor.load_cleaned_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Pranav\Desktop\IIT Kanpur\project\2022_SSDA_airquality\lstm_distance.py", line 177, in load_cleaned_data
+    raise ValueError(f"No cleaned data found for locality {self.locality}")
+ValueError: No cleaned data found for locality Dadar
+

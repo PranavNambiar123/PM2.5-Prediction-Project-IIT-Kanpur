@@ -12,3 +12,28 @@
 2025-03-28 18:19:30,537 - INFO - Loaded actual values with shape: (5, 2)
 2025-03-28 18:19:30,661 - INFO - Metrics - MAE: 2.96, RMSE: 3.18
 2025-03-28 18:19:30,791 - INFO - Plot saved to future_prediction_plots/Airport_future_prediction_20250328_181930.png
+2025-03-28 18:43:09,423 - INFO - Loaded predictions for Bandra generated at 20250328_183125
+2025-03-28 18:43:09,424 - INFO - Prediction shape: (6, 2)
+2025-03-28 18:43:09,425 - INFO - Loaded actual values with shape: (6, 2)
+2025-03-28 18:43:09,580 - INFO - Metrics - MAE: 15.88, RMSE: 18.48
+2025-03-28 18:43:09,697 - INFO - Plot saved to future_prediction_plots/Bandra_future_prediction_20250328_184309.png
+2025-03-28 18:43:25,066 - INFO - Loaded predictions for Kurla generated at 20250328_183126
+2025-03-28 18:43:25,066 - INFO - Prediction shape: (6, 2)
+2025-03-28 18:43:25,068 - INFO - Loaded actual values with shape: (6, 2)
+2025-03-28 18:43:25,203 - INFO - Metrics - MAE: 27.02, RMSE: 27.54
+2025-03-28 18:43:25,316 - INFO - Plot saved to future_prediction_plots/Kurla_future_prediction_20250328_184325.png
+2025-03-28 18:43:37,426 - INFO - Loaded predictions for Powai generated at 20250328_183126
+2025-03-28 18:43:37,426 - INFO - Prediction shape: (6, 2)
+2025-03-28 18:43:37,428 - INFO - Loaded actual values with shape: (6, 2)
+2025-03-28 18:43:37,578 - INFO - Metrics - MAE: 15.46, RMSE: 15.82
+2025-03-28 18:43:37,701 - INFO - Plot saved to future_prediction_plots/Powai_future_prediction_20250328_184337.png
+2025-03-28 18:44:29,912 - INFO - Loaded predictions for Airport generated at 20250328_182128
+2025-03-28 18:44:29,912 - INFO - Prediction shape: (5, 2)
+2025-03-28 18:44:29,914 - INFO - Loaded actual values with shape: (5, 2)
+2025-03-28 18:44:30,063 - INFO - Metrics - MAE: 8.76, RMSE: 10.33
+2025-03-28 18:44:30,198 - INFO - Plot saved to future_prediction_plots/Airport_future_prediction_20250328_184430.png
+2025-03-28 18:44:39,498 - INFO - Loaded predictions for Airport generated at 20250328_180116
+2025-03-28 18:44:39,498 - INFO - Prediction shape: (5, 2)
+2025-03-28 18:44:39,500 - INFO - Loaded actual values with shape: (5, 2)
+2025-03-28 18:44:39,658 - INFO - Metrics - MAE: 2.96, RMSE: 3.18
+2025-03-28 18:44:39,816 - INFO - Plot saved to future_prediction_plots/Airport_future_prediction_20250328_184439.png

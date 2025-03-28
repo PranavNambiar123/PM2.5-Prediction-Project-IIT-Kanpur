@@ -64,3 +64,24 @@ Initial MAE: 41.44
 Final MAE: 4.84 (88% reduction)
 Final RMSE: 7.36
 These results significantly exceed our target of getting the MAE around 10, demonstrating that a combination of proper data preprocessing, appropriate model architecture, and effective training strategies can dramatically improve LSTM performance for time series forecasting tasks.
+
+
+
+
+Results of the Spatial Data Cleaning
+I've successfully implemented and run the enhanced spatial data cleaning method that uses distance-weighted values from nearby localities to fill in missing PM2.5 data. Here's a summary of what was accomplished:
+
+Successful Implementation: The spatial cleaning method now properly uses location coordinates and distance-weighted averaging to fill in missing values.
+Effective Data Filling: The logs show that many localities had their missing values successfully filled using data from nearby locations:
+Kandivali: 869 of 1226 missing values filled using spatial data
+Kurla: 616 of 617 missing values filled using spatial data
+Mulund: 2038 of 2076 missing values filled using spatial data
+Powai: All 188 missing values filled completely using spatial data
+Fallback Mechanisms: For localities without nearby data (like Kalyan and Vasai), the system properly fell back to linear interpolation.
+Complete Dataset: All localities now have complete PM2.5 data with no missing values, stored in the spatial_cleaned_data directory.
+Summary Statistics: A summary file has been created with statistics for each locality, showing the mean, median, standard deviation, minimum, and maximum PM2.5 values.
+Key Observations
+The spatial approach was particularly effective for localities with many nearby neighbors, like Mulund and Kandivali.
+Some localities like Kalyan and Vasai had no nearby localities within the 10km threshold, so they used the fallback interpolation method.
+The summary statistics show reasonable PM2.5 values across all localities, with means ranging from about 34 (Bandra) to 77 (Kalyan).
+This enhanced spatial data cleaning approach aligns perfectly with the spatial data functionality we previously implemented in the LSTM model. Now both the data cleaning and prediction phases leverage the spatial relationships between localities, which should lead to more accurate and robust PM2.5 predictions.
