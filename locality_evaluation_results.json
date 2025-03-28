@@ -1,107 +1,107 @@
 [
   {
     "locality": "Airport",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 6.558167675956735,
+    "rmse": 8.50303478223208,
+    "mse": 72.30160050784853,
+    "error": null
   },
   {
     "locality": "Bandra",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 9.469259078001564,
+    "rmse": 12.762991262365167,
+    "mse": 162.8939459632096,
+    "error": null
   },
   {
     "locality": "Borivali",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 5.951111942545221,
+    "rmse": 9.142960516847284,
+    "mse": 83.59372701262835,
+    "error": null
   },
   {
     "locality": "Colaba",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 1.9895182142134897,
+    "rmse": 4.082652535419983,
+    "mse": 16.66805172497122,
+    "error": null
   },
   {
     "locality": "Kalyan",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 12.308365204701497,
+    "rmse": 16.93475061256315,
+    "mse": 286.78577830970795,
+    "error": null
   },
   {
     "locality": "Kandivali",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 8.915028706285916,
+    "rmse": 12.917907471458745,
+    "mse": 166.87233344116967,
+    "error": null
   },
   {
     "locality": "Kurla",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 10.399078881852184,
+    "rmse": 23.726019666435423,
+    "mse": 562.9240092120805,
+    "error": null
   },
   {
     "locality": "Mahape",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 9.783394625896458,
+    "rmse": 13.412362343071061,
+    "mse": 179.89146362183067,
+    "error": null
   },
   {
     "locality": "Mulund",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 7.2031774124169905,
+    "rmse": 9.61006254035943,
+    "mse": 92.35330202961953,
+    "error": null
   },
   {
     "locality": "Nerul",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 10.308978211139316,
+    "rmse": 13.412745552501734,
+    "mse": 179.90174325615507,
+    "error": null
   },
   {
     "locality": "Powai",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 5.882671467901246,
+    "rmse": 8.297832413048999,
+    "mse": 68.85402275504659,
+    "error": null
   },
   {
     "locality": "Sion",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 4.3795424724973095,
+    "rmse": 5.60969792925794,
+    "mse": 31.46871085752081,
+    "error": null
   },
   {
     "locality": "Vasai",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 8.411455451217206,
+    "rmse": 12.438349220667181,
+    "mse": 154.71253133527188,
+    "error": null
   },
   {
     "locality": "Vileparle",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 8.417041949603355,
+    "rmse": 11.386686196905764,
+    "mse": 129.65662254680424,
+    "error": null
   },
   {
     "locality": "Worli",
-    "mae": null,
-    "rmse": null,
-    "mse": null,
-    "error": "Evaluation error: 'charmap' codec can't encode characters in position 21-40: character maps to <undefined>"
+    "mae": 5.729600853140566,
+    "rmse": 8.47054567504267,
+    "mse": 71.75014403298408,
+    "error": null
   }
 ]

@@ -1,0 +1,14 @@
+2025-03-28 18:17:59,078 - INFO - Created actual values template at actual_values/Airport_actual_20250328_180116.csv
+2025-03-28 18:17:59,081 - INFO - Loaded predictions for Airport generated at 20250328_180116
+2025-03-28 18:17:59,081 - INFO - Prediction shape: (5, 2)
+2025-03-28 18:17:59,316 - INFO - Plot saved to future_prediction_plots/Airport_future_prediction_20250328_181759.png
+2025-03-28 18:19:11,303 - INFO - Loaded predictions for Airport generated at 20250328_180116
+2025-03-28 18:19:11,304 - INFO - Prediction shape: (5, 2)
+2025-03-28 18:19:11,305 - ERROR - Error loading actual file: Error tokenizing data. C error: Expected 2 fields in line 6, saw 3
+
+2025-03-28 18:19:11,540 - INFO - Plot saved to future_prediction_plots/Airport_future_prediction_20250328_181911.png
+2025-03-28 18:19:30,535 - INFO - Loaded predictions for Airport generated at 20250328_180116
+2025-03-28 18:19:30,536 - INFO - Prediction shape: (5, 2)
+2025-03-28 18:19:30,537 - INFO - Loaded actual values with shape: (5, 2)
+2025-03-28 18:19:30,661 - INFO - Metrics - MAE: 2.96, RMSE: 3.18
+2025-03-28 18:19:30,791 - INFO - Plot saved to future_prediction_plots/Airport_future_prediction_20250328_181930.png

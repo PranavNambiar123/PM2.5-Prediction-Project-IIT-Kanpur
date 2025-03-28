@@ -19,6 +19,7 @@ import argparse
 import traceback
 import json
 from geopy.distance import geodesic
+import matplotlib
 warnings.filterwarnings('ignore')
 
 # Set up logging
@@ -640,8 +641,24 @@ class LSTMPredictor:
             # Prepare sequences
             X, y_true_scaled = self.prepare_sequences(test_data)
             
-            # Make predictions
-            y_pred_scaled = self.model.predict(X)
+            # Make predictions with encoding error handling
+            try:
+                # Set environment variables to handle encoding issues
+                os.environ['PYTHONIOENCODING'] = 'utf-8'
+                
+                # Disable verbose output from TensorFlow to avoid encoding issues
+                y_pred_scaled = self.model.predict(X, verbose=0)
+            except UnicodeEncodeError:
+                logging.warning("Encountered encoding issue during prediction, trying alternative approach")
+                # Alternative approach with redirected stdout
+                import sys
+                original_stdout = sys.stdout
+                try:
+                    # Redirect stdout to avoid encoding issues
+                    sys.stdout = open(os.devnull, 'w')
+                    y_pred_scaled = self.model.predict(X, verbose=0)
+                finally:
+                    sys.stdout = original_stdout
             
             # Handle prediction horizon mismatch
             model_output_size = y_pred_scaled.shape[1]
@@ -712,7 +729,7 @@ class LSTMPredictor:
                 plt.title(f'PM2.5 Prediction Results for {self.locality}')
             except UnicodeEncodeError:
                 plt.title('PM2.5 Prediction Results')
-            
+                
             plt.xlabel('Time Steps')
             plt.ylabel('PM2.5')
             plt.legend()
