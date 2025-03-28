@@ -5,6 +5,9 @@ from typing import Dict, Optional
 import matplotlib.pyplot as plt
 from scipy import interpolate
 import os
+import json
+import math
+from geopy.distance import geodesic
 
 class DataCleaner:
     def __init__(self, data_dict: Dict[str, pd.DataFrame]):
@@ -89,34 +92,136 @@ class DataCleaner:
     
     def clean_by_spatial_average(self):
         """
-        Fill missing values using average of surrounding localities
+        Fill missing values using distance-weighted average of surrounding localities
+        Uses exponential decay weighting based on distance between localities
         """
         self.method = 'spatial_average'
         cleaned_dict = {}
         
-        for locality, df in self.raw_data.items():
-            cleaned_dict[locality] = df.copy()
-        
-        for locality in self.raw_data.keys():
-            df = cleaned_dict[locality]
+        try:
+            # Load location coordinates
+            with open('location_coordinates.json', 'r') as f:
+                location_coordinates = json.load(f)
             
-            for column in df.select_dtypes(include=[np.number]).columns:
-                missing_idx = df[column].isna()
+            # Function to calculate distance between two localities
+            def calculate_distance(loc1, loc2):
+                if loc1 in location_coordinates and loc2 in location_coordinates:
+                    coord1 = location_coordinates[loc1]
+                    coord2 = location_coordinates[loc2]
+                    return geodesic((coord1[0], coord1[1]), (coord2[0], coord2[1])).kilometers
+                return float('inf')  # Return infinity if coordinates not found
+            
+            # Function to calculate weight based on distance with exponential decay
+            def calculate_weight(distance, decay_factor=0.5):
+                return math.exp(-decay_factor * distance)
+            
+            # Find nearby localities for each locality
+            locality_neighbors = {}
+            for locality in self.raw_data.keys():
+                if locality in location_coordinates:
+                    neighbors = []
+                    for other_locality in self.raw_data.keys():
+                        if other_locality != locality and other_locality in location_coordinates:
+                            distance = calculate_distance(locality, other_locality)
+                            if distance < 10:  # Consider localities within 10km
+                                weight = calculate_weight(distance)
+                                neighbors.append((other_locality, distance, weight))
+                    
+                    # Sort by distance
+                    neighbors.sort(key=lambda x: x[1])
+                    locality_neighbors[locality] = neighbors
+                    
+                    print(f"Found {len(neighbors)} nearby localities for {locality}")
+                    for neighbor, distance, weight in neighbors:
+                        print(f"  - {neighbor}: {distance:.2f} km, weight: {weight:.6f}")
+                else:
+                    print(f"Warning: No coordinates found for {locality}")
+                    locality_neighbors[locality] = []
+            
+            # Initialize with original data
+            for locality, df in self.raw_data.items():
+                cleaned_dict[locality] = df.copy()
+            
+            # Fill missing values using distance-weighted average
+            for locality, df in cleaned_dict.items():
+                missing_pm25 = df['PM2.5'].isna()
+                missing_count = missing_pm25.sum()
                 
-                if missing_idx.any():
-                    for idx in df[missing_idx].index:
-                        values_at_timestamp = []
+                if missing_count > 0:
+                    print(f"Found {missing_count} timestamps with missing PM2.5 values in {locality}")
+                    neighbors = locality_neighbors.get(locality, [])
+                    
+                    if not neighbors:
+                        print(f"Warning: No nearby localities found for {locality}, using other cleaning methods")
+                        # Fall back to linear interpolation if no neighbors
+                        df['PM2.5'] = df['PM2.5'].interpolate(method='linear')
+                        df['PM2.5'] = df['PM2.5'].fillna(method='ffill')
+                        df['PM2.5'] = df['PM2.5'].fillna(method='bfill')
+                        continue
+                    
+                    filled_count = 0
+                    for idx in df[missing_pm25].index:
+                        weighted_values = []
+                        total_weight = 0
                         
-                        for other_locality, other_df in self.raw_data.items():
-                            if other_locality != locality and idx in other_df.index:
-                                val = other_df.loc[idx, column]
-                                if pd.notna(val):
-                                    values_at_timestamp.append(val)
+                        for neighbor, distance, weight in neighbors:
+                            neighbor_df = self.raw_data[neighbor]
+                            if idx in neighbor_df.index and pd.notna(neighbor_df.loc[idx, 'PM2.5']):
+                                weighted_values.append(neighbor_df.loc[idx, 'PM2.5'] * weight)
+                                total_weight += weight
                         
-                        if values_at_timestamp:
-                            df.loc[idx, column] = np.mean(values_at_timestamp)
+                        if weighted_values and total_weight > 0:
+                            # Calculate weighted average
+                            df.loc[idx, 'PM2.5'] = sum(weighted_values) / total_weight
+                            filled_count += 1
+                    
+                    print(f"Filled {filled_count} missing values using spatial data in {locality}")
+                    
+                    # For any remaining missing values, use interpolation
+                    still_missing = df['PM2.5'].isna().sum()
+                    if still_missing > 0:
+                        print(f"Still have {still_missing} missing values, using interpolation")
+                        df['PM2.5'] = df['PM2.5'].interpolate(method='linear')
+                        df['PM2.5'] = df['PM2.5'].fillna(method='ffill')
+                        df['PM2.5'] = df['PM2.5'].fillna(method='bfill')
+                
+                # Fill other columns using standard interpolation
+                for column in df.select_dtypes(include=[np.number]).columns:
+                    if column != 'PM2.5':
+                        df[column] = df[column].interpolate(method='linear')
+                        df[column] = df[column].fillna(method='ffill')
+                        df[column] = df[column].fillna(method='bfill')
+                
+                cleaned_dict[locality] = df
+        
+        except Exception as e:
+            print(f"Error in spatial average cleaning: {str(e)}")
+            print("Falling back to simple spatial average")
             
-            cleaned_dict[locality] = df
+            # Fall back to simple spatial average if there's an error
+            for locality, df in self.raw_data.items():
+                cleaned_dict[locality] = df.copy()
+            
+            for locality in self.raw_data.keys():
+                df = cleaned_dict[locality]
+                
+                for column in df.select_dtypes(include=[np.number]).columns:
+                    missing_idx = df[column].isna()
+                    
+                    if missing_idx.any():
+                        for idx in df[missing_idx].index:
+                            values_at_timestamp = []
+                            
+                            for other_locality, other_df in self.raw_data.items():
+                                if other_locality != locality and idx in other_df.index:
+                                    val = other_df.loc[idx, column]
+                                    if pd.notna(val):
+                                        values_at_timestamp.append(val)
+                            
+                            if values_at_timestamp:
+                                df.loc[idx, column] = np.mean(values_at_timestamp)
+                
+                cleaned_dict[locality] = df
         
         self.cleaned_data = cleaned_dict
         return cleaned_dict

@@ -1,20 +1,25 @@
 import os
 import numpy as np
 import pandas as pd
+import logging
 import tensorflow as tf
 from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import LSTM, Dense, Dropout, Input, Attention, Concatenate
+from tensorflow.keras.layers import LSTM, Dense, Dropout, Input, Concatenate, Bidirectional, Add, BatchNormalization
+from tensorflow.keras.layers import Layer, MultiHeadAttention
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau, LearningRateScheduler
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 import seaborn as sns
-import logging
 import time
+import warnings
 from glob import glob
+import argparse
+import traceback
+warnings.filterwarnings('ignore')
 
-# Configure logging
+# Set up logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -23,6 +28,29 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
+
+# Custom attention layer implementation
+class AttentionLayer(Layer):
+    def __init__(self, **kwargs):
+        super(AttentionLayer, self).__init__(**kwargs)
+        
+    def build(self, input_shape):
+        self.W = self.add_weight(name="att_weight", shape=(input_shape[-1], 1),
+                                 initializer="normal")
+        super(AttentionLayer, self).build(input_shape)
+        
+    def call(self, inputs):
+        # inputs shape: (batch_size, time_steps, features)
+        # score shape: (batch_size, time_steps, 1)
+        score = tf.matmul(inputs, self.W)
+        
+        # attention_weights shape: (batch_size, time_steps, 1)
+        attention_weights = tf.nn.softmax(score, axis=1)
+        
+        # context_vector shape: (batch_size, features)
+        context_vector = tf.reduce_sum(inputs * attention_weights, axis=1)
+        
+        return context_vector
 
 class CustomCallback(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs=None):
@@ -56,7 +84,7 @@ class LSTMPredictor:
 
     def load_cleaned_data(self):
         """
-        Load cleaned data from the cleaned_data directory
+        Load cleaned data for the locality
         Returns:
             pd.DataFrame: Cleaned data for the locality
         """
@@ -65,7 +93,7 @@ class LSTMPredictor:
         
         if not cleaned_files:
             raise ValueError(f"No spatial average cleaned data found for locality {self.locality}")
-        
+            
         data_path = cleaned_files[0]
         logging.info(f"Loading cleaned data from {data_path}")
         
@@ -96,7 +124,7 @@ class LSTMPredictor:
         
     def prepare_sequences(self, data):
         """
-        Prepare sequences for LSTM training with enhanced feature engineering
+        Prepare sequences for LSTM training with improved normalization
         """
         start_time = time.time()
         logging.info(f"Preparing sequences from data with shape: {data.shape}")
@@ -106,118 +134,159 @@ class LSTMPredictor:
         data['hour'] = data.index.hour.astype(float)
         data['day'] = data.index.day.astype(float)
         data['month'] = data.index.month.astype(float)
+        data['dayofweek'] = data.index.dayofweek.astype(float)
+        data['is_weekend'] = (data.index.dayofweek >= 5).astype(float)
         
         # Add cyclical time features
         data['hour_sin'] = np.sin(2 * np.pi * data['hour'] / 24)
         data['hour_cos'] = np.cos(2 * np.pi * data['hour'] / 24)
+        data['month_sin'] = np.sin(2 * np.pi * data['month'] / 12)
+        data['month_cos'] = np.cos(2 * np.pi * data['month'] / 12)
         
-        # Enhanced rolling features
+        # Essential rolling features
         data['rolling_mean_6h'] = data['PM2.5'].rolling(window=6).mean()
         data['rolling_mean_12h'] = data['PM2.5'].rolling(window=12).mean()
         data['rolling_mean_24h'] = data['PM2.5'].rolling(window=24).mean()
-        data['rolling_std_6h'] = data['PM2.5'].rolling(window=6).std()
         data['rolling_std_12h'] = data['PM2.5'].rolling(window=12).std()
-        data['rolling_max_6h'] = data['PM2.5'].rolling(window=6).max()
-        data['rolling_min_6h'] = data['PM2.5'].rolling(window=6).min()
         
-        # Add lag features
+        # Essential lag features
         data['lag_1h'] = data['PM2.5'].shift(1)
         data['lag_3h'] = data['PM2.5'].shift(3)
         data['lag_6h'] = data['PM2.5'].shift(6)
+        data['lag_12h'] = data['PM2.5'].shift(12)
         
-        # Add rate of change features
+        # Rate of change features
         data['rate_of_change_1h'] = data['PM2.5'].diff(1)
-        data['rate_of_change_3h'] = data['PM2.5'].diff(3)
+        data['rate_of_change_6h'] = data['PM2.5'].diff(6)
         
-        # Fill NaN values from rolling calculations
-        data = data.fillna(method='bfill')
+        # Fill NaN values - use forward fill first, then backward fill
+        data = data.fillna(method='ffill').fillna(method='bfill')
         
         # Separate features and target
         feature_cols = [col for col in data.columns if col != 'PM2.5']
         X_raw = data[feature_cols].values
         y_raw = data['PM2.5'].values
         
-        # Use StandardScaler instead of MinMaxScaler
+        # Normalize features using robust scaling for each feature
         if 'features' not in self.feature_scalers:
-            self.feature_scalers['features'] = StandardScaler()
-            X_scaled = self.feature_scalers['features'].fit_transform(X_raw)
-        else:
-            X_scaled = self.feature_scalers['features'].transform(X_raw)
-            
-        if 'PM2.5' not in self.feature_scalers:
-            self.feature_scalers['PM2.5'] = StandardScaler()
-            y_scaled = self.feature_scalers['PM2.5'].fit_transform(y_raw.reshape(-1, 1))
-        else:
-            y_scaled = self.feature_scalers['PM2.5'].transform(y_raw.reshape(-1, 1))
+            self.feature_scalers['features'] = {}
+            for i in range(X_raw.shape[1]):
+                # Get feature column
+                feature_col = X_raw[:, i]
+                
+                # Calculate median and IQR for robust scaling
+                median = np.median(feature_col)
+                q1 = np.percentile(feature_col, 25)
+                q3 = np.percentile(feature_col, 75)
+                iqr = q3 - q1
+                
+                # Handle zero IQR
+                if iqr == 0:
+                    iqr = 1.0
+                
+                # Store scaling parameters
+                self.feature_scalers['features'][i] = {
+                    'median': median,
+                    'iqr': iqr
+                }
+        
+        # Apply robust scaling to features
+        X_scaled = np.zeros_like(X_raw)
+        for i in range(X_raw.shape[1]):
+            median = self.feature_scalers['features'][i]['median']
+            iqr = self.feature_scalers['features'][i]['iqr']
+            X_scaled[:, i] = (X_raw[:, i] - median) / iqr
+        
+        # Apply log transformation to PM2.5 target to handle skewness
+        # Add a small constant to avoid log(0)
+        y_log = np.log1p(y_raw)
+        
+        # Normalize target
+        if 'target' not in self.feature_scalers:
+            self.feature_scalers['target'] = {
+                'mean': np.mean(y_log),
+                'std': np.std(y_log)
+            }
+        
+        y_scaled = (y_log - self.feature_scalers['target']['mean']) / self.feature_scalers['target']['std']
         
         # Create sequences
-        X, y = [], []
-        total_sequences = len(data) - self.sequence_length - self.prediction_horizon + 1
-        logging.info(f"Creating {total_sequences} sequences...")
+        X_sequences = []
+        y_sequences = []
         
-        for i in range(total_sequences):
-            if i % 1000 == 0:
-                logging.debug(f"Processing sequence {i}/{total_sequences}")
-            
-            # Input sequence includes all features
-            X.append(X_scaled[i:(i + self.sequence_length)])
-            
-            # Target sequence is only PM2.5
-            y.append(y_scaled[i + self.sequence_length:i + self.sequence_length + self.prediction_horizon])
+        logging.info(f"Creating {len(X_scaled) - self.sequence_length - self.prediction_horizon + 1} sequences...")
         
-        X = np.array(X, dtype=np.float32)
-        y = np.array(y, dtype=np.float32).reshape(-1, self.prediction_horizon)
+        for i in range(len(X_scaled) - self.sequence_length - self.prediction_horizon + 1):
+            X_sequences.append(X_scaled[i:i+self.sequence_length])
+            y_sequences.append(y_scaled[i+self.sequence_length:i+self.sequence_length+self.prediction_horizon])
         
-        processing_time = time.time() - start_time
+        X = np.array(X_sequences)
+        y = np.array(y_sequences)
+        
         logging.info(f"Sequence preparation completed. X shape: {X.shape}, y shape: {y.shape}")
-        logging.info(f"Sequence preparation took {processing_time:.2f} seconds")
+        logging.info(f"Sequence preparation took {time.time() - start_time:.2f} seconds")
         
         return X, y
     
+    def inverse_transform_predictions(self, y_pred_scaled):
+        """
+        Inverse transform scaled predictions back to original scale
+        """
+        # Inverse normalize
+        y_pred_log = y_pred_scaled * self.feature_scalers['target']['std'] + self.feature_scalers['target']['mean']
+        
+        # Inverse log transform
+        y_pred = np.expm1(y_pred_log)
+        
+        return y_pred
+    
     def build_model(self, input_shape):
         """
-        Build enhanced LSTM model with attention mechanism
+        Build stacked LSTM model with residual connections
         Args:
             input_shape (tuple): Shape of input sequences (sequence_length, n_features)
         """
-        logging.info(f"Building LSTM model with attention, input shape: {input_shape}")
+        logging.info(f"Building stacked LSTM model with residual connections, input shape: {input_shape}")
         
         # Input layer
         inputs = Input(shape=input_shape)
         
-        # LSTM layer with return_sequences=True to get output for each timestep
-        lstm_out = LSTM(64, return_sequences=True)(inputs)
+        # First LSTM layer with batch normalization
+        x = BatchNormalization()(inputs)
+        lstm1 = LSTM(128, return_sequences=True, recurrent_dropout=0.1)(x)
+        lstm1 = Dropout(0.3)(lstm1)
         
-        # Self-attention mechanism
-        attention = Attention()([lstm_out, lstm_out])
+        # Second LSTM layer with residual connection
+        x = BatchNormalization()(lstm1)
+        lstm2 = LSTM(128, return_sequences=True, recurrent_dropout=0.1)(x)
+        lstm2 = Dropout(0.3)(lstm2)
         
-        # Concatenate LSTM output with attention output
-        concat = Concatenate()([lstm_out, attention])
+        # Residual connection (requires same shape)
+        lstm2_with_residual = Add()([lstm1, lstm2])
         
-        # Final LSTM layer
-        final_lstm = LSTM(32)(concat)
+        # Third LSTM layer
+        x = BatchNormalization()(lstm2_with_residual)
+        lstm3 = LSTM(64, return_sequences=False, recurrent_dropout=0.1)(x)
+        lstm3 = Dropout(0.3)(lstm3)
         
-        # Dense layers with dropout for regularization
-        x = Dense(64, activation='relu')(final_lstm)
-        x = Dropout(0.2)(x)
-        x = Dense(32, activation='relu')(x)
-        x = Dropout(0.1)(x)
+        # Dense layers with batch normalization and dropout
+        x = BatchNormalization()(lstm3)
+        dense1 = Dense(64, activation='relu')(x)
+        dense1 = Dropout(0.3)(dense1)
+        
+        x = BatchNormalization()(dense1)
+        dense2 = Dense(32, activation='relu')(x)
+        dense2 = Dropout(0.2)(dense2)
         
         # Output layer
+        x = BatchNormalization()(dense2)
         outputs = Dense(self.prediction_horizon)(x)
         
         # Create model
         self.model = Model(inputs=inputs, outputs=outputs)
         
-        # Use Adam optimizer with learning rate schedule
-        initial_learning_rate = 0.001
-        lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            initial_learning_rate,
-            decay_steps=1000,
-            decay_rate=0.9,
-            staircase=True)
-        
-        optimizer = Adam(learning_rate=lr_schedule)
+        # Use Adam optimizer with learning rate
+        optimizer = Adam(learning_rate=0.001)
         
         self.model.compile(
             optimizer=optimizer,
@@ -227,10 +296,10 @@ class LSTMPredictor:
         
         logging.info("Model architecture:")
         self.model.summary(print_fn=logging.info)
-
-    def train_model(self, train_data, validation_split=0.2, epochs=100, batch_size=32):
+    
+    def train_model(self, train_data, validation_split=0.2, epochs=150, batch_size=32):
         """
-        Train the LSTM model
+        Train the LSTM model with advanced training strategy
         Args:
             train_data (pd.DataFrame): Training data
             validation_split (float): Fraction of data to use for validation
@@ -249,15 +318,35 @@ class LSTMPredictor:
         # Setup callbacks
         early_stopping = EarlyStopping(
             monitor='val_loss',
-            patience=10,
-            restore_best_weights=True
+            patience=20,
+            restore_best_weights=True,
+            verbose=0
         )
         
         model_checkpoint = ModelCheckpoint(
-            f'models/lstm_{self.locality}.h5',
+            f'models/lstm_{self.locality}.keras',
             monitor='val_loss',
-            save_best_only=True
+            save_best_only=True,
+            verbose=0
         )
+        
+        # Add reduce learning rate on plateau with more patience
+        reduce_lr = ReduceLROnPlateau(
+            monitor='val_loss',
+            factor=0.5,
+            patience=10,
+            min_lr=0.00001,
+            verbose=0
+        )
+        
+        # Learning rate scheduler for warm-up and decay
+        def lr_scheduler(epoch, lr):
+            if epoch < 5:  # Warm-up phase
+                return lr * (1.0 + 0.1 * epoch)
+            else:  # Decay phase
+                return lr * 0.99
+        
+        lr_schedule = LearningRateScheduler(lr_scheduler, verbose=0)
         
         custom_callback = CustomCallback()
         
@@ -267,7 +356,7 @@ class LSTMPredictor:
             validation_split=validation_split,
             epochs=epochs,
             batch_size=batch_size,
-            callbacks=[early_stopping, model_checkpoint, custom_callback],
+            callbacks=[early_stopping, model_checkpoint, reduce_lr, lr_schedule, custom_callback],
             verbose=0  # Disable default verbose output since we're using custom callback
         )
         
@@ -298,7 +387,7 @@ class LSTMPredictor:
         prediction_time = time.time() - start_time
         
         # Inverse transform the prediction
-        prediction = self.feature_scalers['PM2.5'].inverse_transform(scaled_prediction.reshape(-1, 1))
+        prediction = self.inverse_transform_predictions(scaled_prediction)
         
         logging.info(f"Prediction completed in {prediction_time:.2f} seconds")
         logging.debug(f"Predicted values: {prediction.flatten()}")
@@ -307,38 +396,73 @@ class LSTMPredictor:
     
     def evaluate_predictions(self, test_data):
         """
-        Evaluate predictions against actual values
+        Evaluate model predictions on test data
         Args:
             test_data (pd.DataFrame): Test data
         Returns:
-            dict: Dictionary containing evaluation metrics and predictions
+            dict: Dictionary with evaluation metrics
         """
         logging.info(f"Evaluating predictions for {self.locality}")
         start_time = time.time()
         
-        X_test, y_test = self.prepare_sequences(test_data)
+        # Prepare sequences
+        X, y_true_scaled = self.prepare_sequences(test_data)
         
         # Make predictions
-        scaled_predictions = self.model.predict(X_test)
+        y_pred_scaled = self.model.predict(X)
         
-        # Reshape predictions and actual values for inverse transform
-        predictions = self.feature_scalers['PM2.5'].inverse_transform(scaled_predictions.reshape(-1, 1)).reshape(-1, self.prediction_horizon)
-        actual = self.feature_scalers['PM2.5'].inverse_transform(y_test.reshape(-1, 1)).reshape(-1, self.prediction_horizon)
+        # Inverse transform predictions and true values
+        y_pred = self.inverse_transform_predictions(y_pred_scaled)
+        y_true = self.inverse_transform_predictions(y_true_scaled)
         
         # Calculate metrics
-        mae = np.mean(np.abs(actual - predictions))
-        rmse = np.sqrt(np.mean((actual - predictions)**2))
+        mae = np.mean(np.abs(y_pred - y_true))
+        rmse = np.sqrt(np.mean((y_pred - y_true) ** 2))
         
-        evaluation_time = time.time() - start_time
-        logging.info(f"Evaluation completed in {evaluation_time:.2f} seconds")
+        logging.info(f"Evaluation completed in {time.time() - start_time:.2f} seconds")
         logging.info(f"Evaluation metrics - MAE: {mae:.2f}, RMSE: {rmse:.2f}")
         
+        # Generate plots
+        self.visualize_results({'predictions': y_pred, 'actual': y_true}, test_data)
+        
         return {
-            'predictions': predictions,
-            'actual': actual,
+            'predictions': y_pred,
+            'actual': y_true,
             'mae': mae,
             'rmse': rmse
         }
+    
+    def visualize_results(self, results, test_data):
+        """
+        Visualize prediction results
+        Args:
+            results (dict): Dictionary with prediction results
+            test_data (pd.DataFrame): Test data
+        """
+        # Create directory for plots if it doesn't exist
+        os.makedirs('plots', exist_ok=True)
+        
+        # Plot actual vs predicted
+        plt.figure(figsize=(12, 6))
+        plt.plot(results['actual'], label='Actual')
+        plt.plot(results['predictions'], label='Predicted')
+        plt.title(f'PM2.5 Prediction Results for {self.locality}')
+        plt.xlabel('Time Steps')
+        plt.ylabel('PM2.5')
+        plt.legend()
+        plt.savefig(f'plots/{self.locality}_predictions.png')
+        plt.close()
+        
+        # Plot error distribution
+        plt.figure(figsize=(10, 6))
+        error = results['predictions'] - results['actual']
+        error_flat = error.flatten()
+        sns.histplot(error_flat, kde=True)
+        plt.title(f'Prediction Error Distribution for {self.locality}')
+        plt.xlabel('Prediction Error (Predicted - Actual)')
+        plt.ylabel('Frequency')
+        plt.savefig(f'plots/{self.locality}_error_distribution.png')
+        plt.close()
     
     def plot_predictions(self, results, date):
         """
@@ -386,7 +510,7 @@ class LSTMPredictor:
         
         # Plot error distribution
         plt.figure(figsize=(10, 6))
-        error_flat = error.flatten()
+        error_flat = (results['predictions'] - results['actual']).flatten()
         sns.histplot(error_flat, kde=True)
         plt.title(f'Prediction Error Distribution for {self.locality}')
         plt.xlabel('Prediction Error (Predicted - Actual)')
@@ -399,7 +523,7 @@ class LSTMPredictor:
 
 def main():
     """
-    Main function to demonstrate LSTM predictor usage
+    Main function to run LSTM predictor
     """
     start_time = time.time()
     logging.info("Starting LSTM predictor main execution")
@@ -409,8 +533,9 @@ def main():
         
     for file_path in csv_files:
         filename = os.path.basename(file_path)
-        locality, method = filename.replace('.csv', '').split('_', 1)
-        localities.append(locality)
+        if '_spatial_average' in filename:
+            locality = filename.split('_spatial_average')[0]
+            localities.append(locality)
     
     final_results = []
     
@@ -434,8 +559,8 @@ def main():
             # Train with adjusted parameters
             history = predictor.train_model(
                 train_data,
-                epochs=100,  # Reduce epochs but monitor convergence
-                batch_size=64,  # Increase batch size
+                epochs=150,  # Increase epochs
+                batch_size=32,  # Increase batch size
                 validation_split=0.2
             )
             
@@ -459,4 +584,63 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    # Configure logging
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Train LSTM model for PM2.5 prediction')
+    parser.add_argument('--locality', type=str, default='Worli', help='Locality for prediction')
+    parser.add_argument('--sequence_length', type=int, default=24, help='Sequence length for LSTM')
+    parser.add_argument('--prediction_horizon', type=int, default=6, help='Prediction horizon')
+    args = parser.parse_args()
+    
+    # Set random seeds for reproducibility
+    np.random.seed(42)
+    tf.random.set_seed(42)
+    
+    try:
+        # Create and train LSTM model
+        predictor = LSTMPredictor(
+            locality=args.locality,
+            sequence_length=args.sequence_length,
+            prediction_horizon=args.prediction_horizon
+        )
+        
+        # Load data
+        data = predictor.load_cleaned_data()
+        
+        # Split data into train and test sets (80% train, 20% test)
+        train_size = int(len(data) * 0.8)
+        train_data = data[:train_size]
+        test_data = data[train_size:]
+        
+        logging.info(f"Train data shape: {train_data.shape}, Test data shape: {test_data.shape}")
+        
+        # Train model
+        if os.path.exists(f'models/lstm_{args.locality}.keras'):
+            logging.info(f"Loading existing model for {args.locality}")
+            predictor.model = tf.keras.models.load_model(f'models/lstm_{args.locality}.keras', 
+                                        custom_objects={'AttentionLayer': AttentionLayer})
+        else:
+            # Train with adjusted parameters
+            history = predictor.train_model(
+                train_data,
+                epochs=150,  # Increase epochs
+                batch_size=32,  # Adjust batch size
+                validation_split=0.2
+            )
+        
+        # Evaluate on test data
+        results = predictor.evaluate_predictions(test_data)
+        
+        # Print final results
+        logging.info("Final Evaluation Results:")
+        logging.info(f"MAE: {results['mae']:.2f}")
+        logging.info(f"RMSE: {results['rmse']:.2f}")
+        
+        # Calculate total execution time
+        logging.info(f"Total execution time: {time.time() - start_time:.2f} seconds")
+        
+    except Exception as e:
+        logging.error(f"Error: {str(e)}")
+        traceback.print_exc()
