@@ -1,7 +1,11 @@
 Name: Pranav Nambiar
+
 Project: PM2.5 Prediction – IIT Kanpur
+
 GitHub: Link
+
 Roll number: 233562458
+
 IITK email: nambiarpv23@iitk.ac.in
 
 
