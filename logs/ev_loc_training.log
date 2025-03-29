@@ -1,142 +1,524 @@
-2025-03-28 15:28:47,603 - INFO - Logging initialized successfully
-2025-03-28 15:28:47,606 - INFO - Evaluating 15 localities: Airport, Bandra, Borivali, Colaba, Kalyan, Kandivali, Kurla, Mahape, Mulund, Nerul, Powai, Sion, Vasai, Vileparle, Worli
-2025-03-28 15:28:47,606 - INFO - Using sequence_length=24, prediction_horizon=6
-2025-03-28 15:28:47,608 - INFO - Evaluating locality: Airport
-2025-03-28 15:28:47,608 - INFO - Loaded coordinates for 26 localities
-2025-03-28 15:28:47,610 - INFO - Found 12 nearby localities for Airport
-2025-03-28 15:28:47,611 - INFO -   - Vileparle: 2.54 km, weight: 0.2804
-2025-03-28 15:28:47,612 - INFO -   - Vile Parle: 2.54 km, weight: 0.2804
-2025-03-28 15:28:47,612 - INFO -   - Kurla: 3.04 km, weight: 0.2185
-2025-03-28 15:28:47,612 - INFO -   - Andheri: 3.90 km, weight: 0.1426
-2025-03-28 15:28:47,612 - INFO -   - Juhu: 4.45 km, weight: 0.1083
-2025-03-28 15:28:47,612 - INFO -   - Bandra: 4.67 km, weight: 0.0967
-2025-03-28 15:28:47,613 - INFO -   - Sion: 4.77 km, weight: 0.0919
-2025-03-28 15:28:47,613 - INFO -   - Dharavi: 5.05 km, weight: 0.0801
-2025-03-28 15:28:47,613 - INFO -   - Chembur: 5.14 km, weight: 0.0765
-2025-03-28 15:28:47,613 - INFO -   - Powai: 5.45 km, weight: 0.0656
-2025-03-28 15:28:47,613 - INFO -   - Dadar: 8.28 km, weight: 0.0159
-2025-03-28 15:28:47,613 - INFO -   - Worli: 9.97 km, weight: 0.0068
-2025-03-28 15:28:47,613 - INFO - Initializing LSTM Predictor for Airport
-2025-03-28 15:28:47,614 - INFO - Sequence length: 24, Prediction horizon: 6
-2025-03-28 15:28:47,614 - INFO - Loading cleaned data from spatial_cleaned_data\Airport_spatial_weighted.csv
-2025-03-28 15:28:47,627 - INFO - Using spatial data from nearby localities to fill any remaining missing values
-2025-03-28 15:28:47,628 - INFO - No missing PM2.5 values found
-2025-03-28 15:28:47,628 - INFO - Loaded cleaned data with shape: (5305, 4)
-2025-03-28 15:28:47,628 - INFO - Features selected: ['PM10', 'RH', 'AT']
-2025-03-28 15:28:47,628 - INFO - Train data shape: (4244, 4), Test data shape: (1061, 4)
-2025-03-28 15:28:47,629 - INFO - Loading existing model for Airport
-2025-03-28 15:28:47,899 - INFO - Evaluating predictions for Airport
-2025-03-28 15:28:47,899 - INFO - Preparing sequences from data with shape: (1061, 4)
-2025-03-28 15:28:47,915 - INFO - Creating 1032 sequences...
-2025-03-28 15:28:47,918 - INFO - Sequence preparation completed. X shape: (1032, 24, 22), y shape: (1032, 6)
-2025-03-28 15:28:47,919 - INFO - Sequence preparation took 0.02 seconds
-2025-03-28 15:28:49,330 - INFO - Evaluation completed in 1.43 seconds
-2025-03-28 15:28:49,331 - INFO - Evaluation metrics - MAE: 6.56, RMSE: 8.50
-2025-03-28 15:28:49,953 - INFO - Plots saved to plots/distance_Airport_predictions.png and plots/distance_Airport_error_distribution.png
-2025-03-28 15:28:49,954 - INFO - Final Evaluation Results:
-2025-03-28 15:28:49,954 - INFO - MAE: 6.56
-2025-03-28 15:28:49,954 - INFO - RMSE: 8.50
-2025-03-28 15:28:49,955 - INFO - MSE: 72.30
-2025-03-28 15:28:49,956 - INFO - Evaluating locality: Bandra
-2025-03-28 15:28:49,956 - INFO - Loaded coordinates for 26 localities
-2025-03-28 15:28:49,959 - INFO - Found 12 nearby localities for Bandra
-2025-03-28 15:28:49,959 - INFO -   - Dharavi: 2.26 km, weight: 0.3231
-2025-03-28 15:28:49,959 - INFO -   - Sion: 2.60 km, weight: 0.2723
-2025-03-28 15:28:49,960 - INFO -   - Dadar: 4.14 km, weight: 0.1262
-2025-03-28 15:28:49,960 - INFO -   - Kurla: 4.30 km, weight: 0.1163
-2025-03-28 15:28:49,960 - INFO -   - Airport: 4.67 km, weight: 0.0967
-2025-03-28 15:28:49,960 - INFO -   - Vileparle: 4.99 km, weight: 0.0826
-2025-03-28 15:28:49,960 - INFO -   - Vile Parle: 4.99 km, weight: 0.0825
-2025-03-28 15:28:49,960 - INFO -   - Worli: 5.33 km, weight: 0.0697
-2025-03-28 15:28:49,960 - INFO -   - Juhu: 5.91 km, weight: 0.0520
-2025-03-28 15:28:49,960 - INFO -   - Chembur: 6.08 km, weight: 0.0479
-2025-03-28 15:28:49,961 - INFO -   - Andheri: 7.19 km, weight: 0.0274
-2025-03-28 15:28:49,961 - INFO -   - Powai: 9.98 km, weight: 0.0068
-2025-03-28 15:28:49,961 - INFO - Initializing LSTM Predictor for Bandra
-2025-03-28 15:28:49,961 - INFO - Sequence length: 24, Prediction horizon: 6
-2025-03-28 15:28:49,962 - INFO - Loading cleaned data from spatial_cleaned_data\Bandra_spatial_weighted.csv
-2025-03-28 15:28:49,972 - INFO - Using spatial data from nearby localities to fill any remaining missing values
-2025-03-28 15:28:49,972 - INFO - No missing PM2.5 values found
-2025-03-28 15:28:49,973 - INFO - Loaded cleaned data with shape: (5441, 4)
-2025-03-28 15:28:49,973 - INFO - Features selected: ['PM10', 'RH', 'AT']
-2025-03-28 15:28:49,973 - INFO - Train data shape: (4352, 4), Test data shape: (1089, 4)
-2025-03-28 15:28:49,973 - INFO - Loading existing model for Bandra
-2025-03-28 15:28:50,176 - INFO - Evaluating predictions for Bandra
-2025-03-28 15:28:50,176 - INFO - Preparing sequences from data with shape: (1089, 4)
-2025-03-28 15:28:50,190 - INFO - Creating 1060 sequences...
-2025-03-28 15:28:50,193 - INFO - Sequence preparation completed. X shape: (1060, 24, 22), y shape: (1060, 6)
-2025-03-28 15:28:50,193 - INFO - Sequence preparation took 0.02 seconds
-2025-03-28 15:28:51,318 - INFO - Evaluation completed in 1.14 seconds
-2025-03-28 15:28:51,318 - INFO - Evaluation metrics - MAE: 9.47, RMSE: 12.76
-2025-03-28 15:28:51,851 - INFO - Plots saved to plots/distance_Bandra_predictions.png and plots/distance_Bandra_error_distribution.png
-2025-03-28 15:28:51,852 - INFO - Final Evaluation Results:
-2025-03-28 15:28:51,852 - INFO - MAE: 9.47
-2025-03-28 15:28:51,852 - INFO - RMSE: 12.76
-2025-03-28 15:28:51,852 - INFO - MSE: 162.89
-2025-03-28 15:28:51,854 - INFO - Evaluating locality: Borivali
-2025-03-28 15:28:51,854 - INFO - Loaded coordinates for 26 localities
-2025-03-28 15:28:51,857 - INFO - Found 2 nearby localities for Borivali
-2025-03-28 15:28:51,857 - INFO -   - Kandivali: 3.02 km, weight: 0.2211
-2025-03-28 15:28:51,858 - INFO -   - Malad: 4.78 km, weight: 0.0917
-2025-03-28 15:28:51,858 - INFO - Initializing LSTM Predictor for Borivali
-2025-03-28 15:28:51,858 - INFO - Sequence length: 24, Prediction horizon: 6
-2025-03-28 15:28:51,858 - INFO - Loading cleaned data from spatial_cleaned_data\Borivali_spatial_weighted.csv
-2025-03-28 15:28:51,868 - INFO - Using spatial data from nearby localities to fill any remaining missing values
-2025-03-28 15:28:51,868 - INFO - No missing PM2.5 values found
-2025-03-28 15:28:51,869 - INFO - Loaded cleaned data with shape: (5425, 4)
-2025-03-28 15:28:51,869 - INFO - Features selected: ['PM10', 'RH', 'AT']
-2025-03-28 15:28:51,870 - INFO - Train data shape: (4340, 4), Test data shape: (1085, 4)
-2025-03-28 15:28:51,870 - INFO - Loading existing model for Borivali
-2025-03-28 15:28:52,090 - INFO - Evaluating predictions for Borivali
-2025-03-28 15:28:52,091 - INFO - Preparing sequences from data with shape: (1085, 4)
-2025-03-28 15:28:52,106 - INFO - Creating 1056 sequences...
-2025-03-28 15:28:52,109 - INFO - Sequence preparation completed. X shape: (1056, 24, 22), y shape: (1056, 6)
-2025-03-28 15:28:52,109 - INFO - Sequence preparation took 0.02 seconds
-2025-03-28 15:28:52,918 - INFO - Evaluation completed in 0.83 seconds
-2025-03-28 15:28:52,919 - INFO - Evaluation metrics - MAE: 5.95, RMSE: 9.14
-2025-03-28 15:28:53,639 - INFO - Plots saved to plots/distance_Borivali_predictions.png and plots/distance_Borivali_error_distribution.png
-2025-03-28 15:28:53,640 - INFO - Final Evaluation Results:
-2025-03-28 15:28:53,640 - INFO - MAE: 5.95
-2025-03-28 15:28:53,641 - INFO - RMSE: 9.14
-2025-03-28 15:28:53,641 - INFO - MSE: 83.59
-2025-03-28 15:28:53,642 - INFO - Evaluating locality: Colaba
-2025-03-28 15:28:53,643 - INFO - Loaded coordinates for 26 localities
-2025-03-28 15:28:53,645 - INFO - Found 1 nearby localities for Colaba
-2025-03-28 15:28:53,646 - INFO -   - Malabar Hill: 5.33 km, weight: 0.0696
-2025-03-28 15:28:53,646 - INFO - Initializing LSTM Predictor for Colaba
-2025-03-28 15:28:53,646 - INFO - Sequence length: 24, Prediction horizon: 6
-2025-03-28 15:28:53,646 - INFO - Loading cleaned data from spatial_cleaned_data\Colaba_spatial_weighted.csv
-2025-03-28 15:28:53,656 - INFO - Using spatial data from nearby localities to fill any remaining missing values
-2025-03-28 15:28:53,656 - INFO - No missing PM2.5 values found
-2025-03-28 15:28:53,657 - INFO - Loaded cleaned data with shape: (4801, 4)
-2025-03-28 15:28:53,657 - INFO - Features selected: ['PM10', 'RH', 'AT']
-2025-03-28 15:28:53,658 - INFO - Train data shape: (3840, 4), Test data shape: (961, 4)
-2025-03-28 15:28:53,658 - INFO - Loading existing model for Colaba
-2025-03-28 15:28:53,878 - INFO - Evaluating predictions for Colaba
-2025-03-28 15:28:53,878 - INFO - Preparing sequences from data with shape: (961, 4)
-2025-03-28 15:28:53,890 - INFO - Creating 932 sequences...
-2025-03-28 15:28:53,893 - INFO - Sequence preparation completed. X shape: (932, 24, 22), y shape: (932, 6)
-2025-03-28 15:28:53,893 - INFO - Sequence preparation took 0.02 seconds
-2025-03-28 15:28:55,164 - INFO - Evaluation completed in 1.29 seconds
-2025-03-28 15:28:55,164 - INFO - Evaluation metrics - MAE: 1.99, RMSE: 4.08
-2025-03-28 15:28:55,854 - INFO - Plots saved to plots/distance_Colaba_predictions.png and plots/distance_Colaba_error_distribution.png
-2025-03-28 15:28:55,855 - INFO - Final Evaluation Results:
-2025-03-28 15:28:55,856 - INFO - MAE: 1.99
-2025-03-28 15:28:55,856 - INFO - RMSE: 4.08
-2025-03-28 15:28:55,856 - INFO - MSE: 16.67
-2025-03-28 15:28:55,857 - INFO - Evaluating locality: Kalyan
-2025-03-28 15:28:55,858 - INFO - Loaded coordinates for 26 localities
-2025-03-28 15:28:55,861 - INFO - Found 0 nearby localities for Kalyan
-2025-03-28 15:28:55,861 - INFO - Initializing LSTM Predictor for Kalyan
-2025-03-28 15:28:55,861 - INFO - Sequence length: 24, Prediction horizon: 6
-2025-03-28 15:28:55,862 - INFO - Loading cleaned data from spatial_cleaned_data\Kalyan_spatial_weighted.csv
-2025-03-28 15:28:55,873 - WARNING - Data still contains NaN values. Filling with forward and backward fill.
-2025-03-28 15:28:55,875 - INFO - Loaded cleaned data with shape: (5442, 4)
-2025-03-28 15:28:55,875 - INFO - Features selected: ['PM10', 'RH', 'AT']
-2025-03-28 15:28:55,875 - INFO - Train data shape: (4353, 4), Test data shape: (1089, 4)
-2025-03-28 15:28:55,876 - INFO - Loading existing model for Kalyan
-2025-03-28 15:28:56,108 - INFO - Evaluating predictions for Kalyan
-2025-03-28 15:28:56,108 - INFO - Preparing sequences from data with shape: (1089, 4)
-2025-03-28 15:28:56,120 - INFO - Creating 1060 sequences...
-2025-03-28 15:28:56,122 - INFO - Sequence preparation completed. X shape: (1060, 24, 22), y shape: (1060, 6)
-2025-03-28 15:28:56,123 - INFO - Sequence preparation took 0.01 seconds
+=== PM2.5 Prediction Evaluation Started at 2025-03-28 17:44:28.710643 ===
+This log file will track the execution of evaluate_all_localities.py
+
+2025-03-28 17:44:28 - Starting evaluation of all localities
+2025-03-28 17:44:28 - Evaluation process started with PID: 26280
+2025-03-28 17:44:29 - OUTPUT: 2025-03-28 17:44:29.417934: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-03-28 17:44:30 - OUTPUT: 2025-03-28 17:44:30.378702: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,635 - root - INFO - Evaluating 15 localities: Airport, Bandra, Borivali, Colaba, Kalyan, Kandivali, Kurla, Mahape, Mulund, Nerul, Powai, Sion, Vasai, Vileparle, Worli
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,635 - root - INFO - Using sequence_length=24, prediction_horizon=6
+2025-03-28 17:44:33 - OUTPUT: 
+2025-03-28 17:44:33 - OUTPUT: Evaluating localities:   0%|          | 0/15 [00:00<?, ?it/s]2025-03-28 17:44:33,636 - root - INFO - Evaluating locality: Airport
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,636 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,639 - root - INFO - Found 12 nearby localities for Airport
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,639 - root - INFO -   - Vileparle: 2.54 km, weight: 0.2804
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,639 - root - INFO -   - Vile Parle: 2.54 km, weight: 0.2804
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,639 - root - INFO -   - Kurla: 3.04 km, weight: 0.2185
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,639 - root - INFO -   - Andheri: 3.90 km, weight: 0.1426
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,639 - root - INFO -   - Juhu: 4.45 km, weight: 0.1083
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,639 - root - INFO -   - Bandra: 4.67 km, weight: 0.0967
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,639 - root - INFO -   - Sion: 4.77 km, weight: 0.0919
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,639 - root - INFO -   - Dharavi: 5.05 km, weight: 0.0801
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,639 - root - INFO -   - Chembur: 5.14 km, weight: 0.0765
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,640 - root - INFO -   - Powai: 5.45 km, weight: 0.0656
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,640 - root - INFO -   - Dadar: 8.28 km, weight: 0.0159
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,640 - root - INFO -   - Worli: 9.97 km, weight: 0.0068
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,640 - root - INFO - Initializing LSTM Predictor for Airport
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,640 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,640 - root - INFO - Loading cleaned data from spatial_cleaned_data\Airport_spatial_weighted.csv
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,655 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,655 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,656 - root - INFO - Loaded cleaned data with shape: (5305, 4)
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,656 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,656 - root - INFO - Train data shape: (4244, 4), Test data shape: (1061, 4)
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,656 - root - INFO - Loading existing model for Airport
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33.660558: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+2025-03-28 17:44:33 - OUTPUT: To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,876 - root - INFO - Evaluating predictions for Airport
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,876 - root - INFO - Preparing sequences from data with shape: (1061, 4)
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,887 - root - INFO - Creating 1032 sequences...
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,890 - root - INFO - Sequence preparation completed. X shape: (1032, 24, 22), y shape: (1032, 6)
+2025-03-28 17:44:33 - OUTPUT: 2025-03-28 17:44:33,890 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:34 - OUTPUT: 2025-03-28 17:44:34,847 - root - INFO - Evaluation completed in 0.97 seconds
+2025-03-28 17:44:34 - OUTPUT: 2025-03-28 17:44:34,847 - root - INFO - Evaluation metrics - MAE: 6.56, RMSE: 8.50
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,236 - root - INFO - Plots saved to plots/distance_Airport_predictions.png and plots/distance_Airport_error_distribution.png
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,237 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,237 - root - INFO - MAE: 6.56
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,237 - root - INFO - RMSE: 8.50
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,237 - root - INFO - MSE: 72.30
+2025-03-28 17:44:35 - OUTPUT: 
+2025-03-28 17:44:35 - OUTPUT: Evaluating localities:   7%|6         | 1/15 [00:01<00:22,  1.60s/it]2025-03-28 17:44:35,238 - root - INFO - Evaluating locality: Bandra
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,238 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,242 - root - INFO - Found 12 nearby localities for Bandra
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,242 - root - INFO -   - Dharavi: 2.26 km, weight: 0.3231
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,242 - root - INFO -   - Sion: 2.60 km, weight: 0.2723
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,242 - root - INFO -   - Dadar: 4.14 km, weight: 0.1262
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,242 - root - INFO -   - Kurla: 4.30 km, weight: 0.1163
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,243 - root - INFO -   - Airport: 4.67 km, weight: 0.0967
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,243 - root - INFO -   - Vileparle: 4.99 km, weight: 0.0826
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,243 - root - INFO -   - Vile Parle: 4.99 km, weight: 0.0825
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,243 - root - INFO -   - Worli: 5.33 km, weight: 0.0697
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,243 - root - INFO -   - Juhu: 5.91 km, weight: 0.0520
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,243 - root - INFO -   - Chembur: 6.08 km, weight: 0.0479
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,243 - root - INFO -   - Andheri: 7.19 km, weight: 0.0274
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,243 - root - INFO -   - Powai: 9.98 km, weight: 0.0068
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,243 - root - INFO - Initializing LSTM Predictor for Bandra
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,243 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,244 - root - INFO - Loading cleaned data from spatial_cleaned_data\Bandra_spatial_weighted.csv
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,269 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,269 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,271 - root - INFO - Loaded cleaned data with shape: (5441, 4)
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,271 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,272 - root - INFO - Train data shape: (4352, 4), Test data shape: (1089, 4)
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,272 - root - INFO - Loading existing model for Bandra
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,444 - root - INFO - Evaluating predictions for Bandra
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,444 - root - INFO - Preparing sequences from data with shape: (1089, 4)
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,454 - root - INFO - Creating 1060 sequences...
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,456 - root - INFO - Sequence preparation completed. X shape: (1060, 24, 22), y shape: (1060, 6)
+2025-03-28 17:44:35 - OUTPUT: 2025-03-28 17:44:35,456 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,328 - root - INFO - Evaluation completed in 0.88 seconds
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,328 - root - INFO - Evaluation metrics - MAE: 9.47, RMSE: 12.76
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,655 - root - INFO - Plots saved to plots/distance_Bandra_predictions.png and plots/distance_Bandra_error_distribution.png
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,656 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,656 - root - INFO - MAE: 9.47
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,656 - root - INFO - RMSE: 12.76
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,656 - root - INFO - MSE: 162.89
+2025-03-28 17:44:36 - OUTPUT: 
+2025-03-28 17:44:36 - OUTPUT: Evaluating localities:  13%|#3        | 2/15 [00:03<00:19,  1.49s/it]2025-03-28 17:44:36,657 - root - INFO - Evaluating locality: Borivali
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,657 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,660 - root - INFO - Found 2 nearby localities for Borivali
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,660 - root - INFO -   - Kandivali: 3.02 km, weight: 0.2211
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,660 - root - INFO -   - Malad: 4.78 km, weight: 0.0917
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,660 - root - INFO - Initializing LSTM Predictor for Borivali
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,660 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,660 - root - INFO - Loading cleaned data from spatial_cleaned_data\Borivali_spatial_weighted.csv
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,670 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,671 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,671 - root - INFO - Loaded cleaned data with shape: (5425, 4)
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,671 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,671 - root - INFO - Train data shape: (4340, 4), Test data shape: (1085, 4)
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,672 - root - INFO - Loading existing model for Borivali
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,851 - root - INFO - Evaluating predictions for Borivali
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,852 - root - INFO - Preparing sequences from data with shape: (1085, 4)
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,862 - root - INFO - Creating 1056 sequences...
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,864 - root - INFO - Sequence preparation completed. X shape: (1056, 24, 22), y shape: (1056, 6)
+2025-03-28 17:44:36 - OUTPUT: 2025-03-28 17:44:36,864 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,607 - root - INFO - Evaluation completed in 0.76 seconds
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,607 - root - INFO - Evaluation metrics - MAE: 5.95, RMSE: 9.14
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,967 - root - INFO - Plots saved to plots/distance_Borivali_predictions.png and plots/distance_Borivali_error_distribution.png
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,967 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,967 - root - INFO - MAE: 5.95
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,967 - root - INFO - RMSE: 9.14
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,967 - root - INFO - MSE: 83.59
+2025-03-28 17:44:37 - OUTPUT: 
+2025-03-28 17:44:37 - OUTPUT: Evaluating localities:  20%|##        | 3/15 [00:04<00:16,  1.41s/it]2025-03-28 17:44:37,968 - root - INFO - Evaluating locality: Colaba
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,969 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,971 - root - INFO - Found 1 nearby localities for Colaba
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,972 - root - INFO -   - Malabar Hill: 5.33 km, weight: 0.0696
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,972 - root - INFO - Initializing LSTM Predictor for Colaba
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,972 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,972 - root - INFO - Loading cleaned data from spatial_cleaned_data\Colaba_spatial_weighted.csv
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,982 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,983 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,983 - root - INFO - Loaded cleaned data with shape: (4801, 4)
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,983 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,984 - root - INFO - Train data shape: (3840, 4), Test data shape: (961, 4)
+2025-03-28 17:44:37 - OUTPUT: 2025-03-28 17:44:37,984 - root - INFO - Loading existing model for Colaba
+2025-03-28 17:44:38 - OUTPUT: 2025-03-28 17:44:38,150 - root - INFO - Evaluating predictions for Colaba
+2025-03-28 17:44:38 - OUTPUT: 2025-03-28 17:44:38,150 - root - INFO - Preparing sequences from data with shape: (961, 4)
+2025-03-28 17:44:38 - OUTPUT: 2025-03-28 17:44:38,160 - root - INFO - Creating 932 sequences...
+2025-03-28 17:44:38 - OUTPUT: 2025-03-28 17:44:38,164 - root - INFO - Sequence preparation completed. X shape: (932, 24, 22), y shape: (932, 6)
+2025-03-28 17:44:38 - OUTPUT: 2025-03-28 17:44:38,164 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,011 - root - INFO - Evaluation completed in 0.86 seconds
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,011 - root - INFO - Evaluation metrics - MAE: 1.99, RMSE: 4.08
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,421 - root - INFO - Plots saved to plots/distance_Colaba_predictions.png and plots/distance_Colaba_error_distribution.png
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,421 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,421 - root - INFO - MAE: 1.99
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,422 - root - INFO - RMSE: 4.08
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,422 - root - INFO - MSE: 16.67
+2025-03-28 17:44:39 - OUTPUT: 
+2025-03-28 17:44:39 - OUTPUT: Evaluating localities:  27%|##6       | 4/15 [00:05<00:15,  1.43s/it]2025-03-28 17:44:39,422 - root - INFO - Evaluating locality: Kalyan
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,423 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,425 - root - INFO - Found 0 nearby localities for Kalyan
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,426 - root - INFO - Initializing LSTM Predictor for Kalyan
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,426 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,426 - root - INFO - Loading cleaned data from spatial_cleaned_data\Kalyan_spatial_weighted.csv
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,436 - root - WARNING - Data still contains NaN values. Filling with forward and backward fill.
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,437 - root - INFO - Loaded cleaned data with shape: (5442, 4)
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,437 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,437 - root - INFO - Train data shape: (4353, 4), Test data shape: (1089, 4)
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,437 - root - INFO - Loading existing model for Kalyan
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,596 - root - INFO - Evaluating predictions for Kalyan
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,596 - root - INFO - Preparing sequences from data with shape: (1089, 4)
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,606 - root - INFO - Creating 1060 sequences...
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,608 - root - INFO - Sequence preparation completed. X shape: (1060, 24, 22), y shape: (1060, 6)
+2025-03-28 17:44:39 - OUTPUT: 2025-03-28 17:44:39,608 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,480 - root - INFO - Evaluation completed in 0.88 seconds
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,480 - root - INFO - Evaluation metrics - MAE: 12.31, RMSE: 16.93
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,844 - root - INFO - Plots saved to plots/distance_Kalyan_predictions.png and plots/distance_Kalyan_error_distribution.png
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,844 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,845 - root - INFO - MAE: 12.31
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,845 - root - INFO - RMSE: 16.93
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,845 - root - INFO - MSE: 286.79
+2025-03-28 17:44:40 - OUTPUT: 
+2025-03-28 17:44:40 - OUTPUT: Evaluating localities:  33%|###3      | 5/15 [00:07<00:14,  1.43s/it]2025-03-28 17:44:40,846 - root - INFO - Evaluating locality: Kandivali
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,846 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,849 - root - INFO - Found 3 nearby localities for Kandivali
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,849 - root - INFO -   - Malad: 1.76 km, weight: 0.4149
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,849 - root - INFO -   - Borivali: 3.02 km, weight: 0.2211
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,850 - root - INFO -   - Andheri: 9.16 km, weight: 0.0102
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,850 - root - INFO - Initializing LSTM Predictor for Kandivali
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,850 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,851 - root - INFO - Loading cleaned data from spatial_cleaned_data\Kandivali_spatial_weighted.csv
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,863 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,863 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,864 - root - INFO - Loaded cleaned data with shape: (4801, 4)
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,864 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,864 - root - INFO - Train data shape: (3840, 4), Test data shape: (961, 4)
+2025-03-28 17:44:40 - OUTPUT: 2025-03-28 17:44:40,864 - root - INFO - Loading existing model for Kandivali
+2025-03-28 17:44:41 - OUTPUT: 2025-03-28 17:44:41,044 - root - INFO - Evaluating predictions for Kandivali
+2025-03-28 17:44:41 - OUTPUT: 2025-03-28 17:44:41,045 - root - INFO - Preparing sequences from data with shape: (961, 4)
+2025-03-28 17:44:41 - OUTPUT: 2025-03-28 17:44:41,055 - root - INFO - Creating 932 sequences...
+2025-03-28 17:44:41 - OUTPUT: 2025-03-28 17:44:41,057 - root - INFO - Sequence preparation completed. X shape: (932, 24, 22), y shape: (932, 6)
+2025-03-28 17:44:41 - OUTPUT: 2025-03-28 17:44:41,057 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:41 - OUTPUT: 2025-03-28 17:44:41,908 - root - INFO - Evaluation completed in 0.86 seconds
+2025-03-28 17:44:41 - OUTPUT: 2025-03-28 17:44:41,908 - root - INFO - Evaluation metrics - MAE: 8.92, RMSE: 12.92
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,244 - root - INFO - Plots saved to plots/distance_Kandivali_predictions.png and plots/distance_Kandivali_error_distribution.png
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,244 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,244 - root - INFO - MAE: 8.92
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,245 - root - INFO - RMSE: 12.92
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,245 - root - INFO - MSE: 166.87
+2025-03-28 17:44:42 - OUTPUT: 
+2025-03-28 17:44:42 - OUTPUT: Evaluating localities:  40%|####      | 6/15 [00:08<00:12,  1.42s/it]2025-03-28 17:44:42,245 - root - INFO - Evaluating locality: Kurla
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,246 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,248 - root - INFO - Found 12 nearby localities for Kurla
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,248 - root - INFO -   - Chembur: 2.27 km, weight: 0.3211
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,248 - root - INFO -   - Sion: 2.71 km, weight: 0.2574
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,248 - root - INFO -   - Airport: 3.04 km, weight: 0.2185
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,248 - root - INFO -   - Dharavi: 3.21 km, weight: 0.2009
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,248 - root - INFO -   - Bandra: 4.30 km, weight: 0.1163
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,249 - root - INFO -   - Vileparle: 5.34 km, weight: 0.0694
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,249 - root - INFO -   - Vile Parle: 5.34 km, weight: 0.0694
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,249 - root - INFO -   - Dadar: 6.50 km, weight: 0.0388
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,249 - root - INFO -   - Powai: 6.57 km, weight: 0.0374
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,249 - root - INFO -   - Andheri: 6.94 km, weight: 0.0312
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,249 - root - INFO -   - Juhu: 7.15 km, weight: 0.0281
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,249 - root - INFO -   - Worli: 8.80 km, weight: 0.0123
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,249 - root - INFO - Initializing LSTM Predictor for Kurla
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,249 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,249 - root - INFO - Loading cleaned data from spatial_cleaned_data\Kurla_spatial_weighted.csv
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,258 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,258 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,259 - root - INFO - Loaded cleaned data with shape: (5425, 4)
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,259 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,259 - root - INFO - Train data shape: (4340, 4), Test data shape: (1085, 4)
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,259 - root - INFO - Loading existing model for Kurla
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,392 - root - INFO - Evaluating predictions for Kurla
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,392 - root - INFO - Preparing sequences from data with shape: (1085, 4)
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,639 - root - INFO - Creating 1056 sequences...
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,642 - root - INFO - Sequence preparation completed. X shape: (1056, 24, 22), y shape: (1056, 6)
+2025-03-28 17:44:42 - OUTPUT: 2025-03-28 17:44:42,642 - root - INFO - Sequence preparation took 0.25 seconds
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,249 - root - INFO - Evaluation completed in 0.86 seconds
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,249 - root - INFO - Evaluation metrics - MAE: 10.40, RMSE: 23.73
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,710 - root - INFO - Plots saved to plots/distance_Kurla_predictions.png and plots/distance_Kurla_error_distribution.png
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,710 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,710 - root - INFO - MAE: 10.40
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,710 - root - INFO - RMSE: 23.73
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,710 - root - INFO - MSE: 562.92
+2025-03-28 17:44:43 - OUTPUT: 
+2025-03-28 17:44:43 - OUTPUT: Evaluating localities:  47%|####6     | 7/15 [00:10<00:11,  1.43s/it]2025-03-28 17:44:43,711 - root - INFO - Evaluating locality: Mahape
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,711 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,714 - root - INFO - Found 3 nearby localities for Mahape
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,715 - root - INFO -   - Nerul: 8.48 km, weight: 0.0144
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,715 - root - INFO -   - Navi Mumbai: 9.11 km, weight: 0.0105
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,715 - root - INFO -   - Mulund: 9.72 km, weight: 0.0078
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,715 - root - INFO - Initializing LSTM Predictor for Mahape
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,715 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,716 - root - INFO - Loading cleaned data from spatial_cleaned_data\Mahape_spatial_weighted.csv
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,725 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,725 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,725 - root - INFO - Loaded cleaned data with shape: (5320, 4)
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,725 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,726 - root - INFO - Train data shape: (4256, 4), Test data shape: (1064, 4)
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,726 - root - INFO - Loading existing model for Mahape
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,845 - root - INFO - Evaluating predictions for Mahape
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,845 - root - INFO - Preparing sequences from data with shape: (1064, 4)
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,855 - root - INFO - Creating 1035 sequences...
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,857 - root - INFO - Sequence preparation completed. X shape: (1035, 24, 22), y shape: (1035, 6)
+2025-03-28 17:44:43 - OUTPUT: 2025-03-28 17:44:43,857 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:44 - OUTPUT: 2025-03-28 17:44:44,685 - root - INFO - Evaluation completed in 0.84 seconds
+2025-03-28 17:44:44 - OUTPUT: 2025-03-28 17:44:44,685 - root - INFO - Evaluation metrics - MAE: 9.78, RMSE: 13.41
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,028 - root - INFO - Plots saved to plots/distance_Mahape_predictions.png and plots/distance_Mahape_error_distribution.png
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,029 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,029 - root - INFO - MAE: 9.78
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,030 - root - INFO - RMSE: 13.41
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,030 - root - INFO - MSE: 179.89
+2025-03-28 17:44:45 - OUTPUT: 
+2025-03-28 17:44:45 - OUTPUT: Evaluating localities:  53%|#####3    | 8/15 [00:11<00:09,  1.40s/it]2025-03-28 17:44:45,036 - root - INFO - Evaluating locality: Mulund
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,036 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,040 - root - INFO - Found 3 nearby localities for Mulund
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,040 - root - INFO -   - Thane: 2.86 km, weight: 0.2397
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,041 - root - INFO -   - Powai: 7.84 km, weight: 0.0198
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,041 - root - INFO -   - Mahape: 9.72 km, weight: 0.0078
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,041 - root - INFO - Initializing LSTM Predictor for Mulund
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,041 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,041 - root - INFO - Loading cleaned data from spatial_cleaned_data\Mulund_spatial_weighted.csv
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,052 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,053 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,053 - root - INFO - Loaded cleaned data with shape: (5425, 4)
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,054 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,054 - root - INFO - Train data shape: (4340, 4), Test data shape: (1085, 4)
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,054 - root - INFO - Loading existing model for Mulund
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,187 - root - INFO - Evaluating predictions for Mulund
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,187 - root - INFO - Preparing sequences from data with shape: (1085, 4)
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,198 - root - INFO - Creating 1056 sequences...
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,202 - root - INFO - Sequence preparation completed. X shape: (1056, 24, 22), y shape: (1056, 6)
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,202 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,768 - root - INFO - Evaluation completed in 0.58 seconds
+2025-03-28 17:44:45 - OUTPUT: 2025-03-28 17:44:45,769 - root - INFO - Evaluation metrics - MAE: 7.20, RMSE: 9.61
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,116 - root - INFO - Plots saved to plots/distance_Mulund_predictions.png and plots/distance_Mulund_error_distribution.png
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,117 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,117 - root - INFO - MAE: 7.20
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,118 - root - INFO - RMSE: 9.61
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,118 - root - INFO - MSE: 92.35
+2025-03-28 17:44:46 - OUTPUT: 
+2025-03-28 17:44:46 - OUTPUT: Evaluating localities:  60%|######    | 9/15 [00:12<00:07,  1.30s/it]2025-03-28 17:44:46,119 - root - INFO - Evaluating locality: Nerul
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,119 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,122 - root - INFO - Found 2 nearby localities for Nerul
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,122 - root - INFO -   - Navi Mumbai: 0.79 km, weight: 0.6747
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,122 - root - INFO -   - Mahape: 8.48 km, weight: 0.0144
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,122 - root - INFO - Initializing LSTM Predictor for Nerul
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,122 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,122 - root - INFO - Loading cleaned data from spatial_cleaned_data\Nerul_spatial_weighted.csv
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,133 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,133 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,134 - root - INFO - Loaded cleaned data with shape: (5305, 4)
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,134 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,134 - root - INFO - Train data shape: (4244, 4), Test data shape: (1061, 4)
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,134 - root - INFO - Loading existing model for Nerul
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,262 - root - INFO - Evaluating predictions for Nerul
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,263 - root - INFO - Preparing sequences from data with shape: (1061, 4)
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,274 - root - INFO - Creating 1032 sequences...
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,276 - root - INFO - Sequence preparation completed. X shape: (1032, 24, 22), y shape: (1032, 6)
+2025-03-28 17:44:46 - OUTPUT: 2025-03-28 17:44:46,276 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,172 - root - INFO - Evaluation completed in 0.91 seconds
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,172 - root - INFO - Evaluation metrics - MAE: 10.31, RMSE: 13.41
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,510 - root - INFO - Plots saved to plots/distance_Nerul_predictions.png and plots/distance_Nerul_error_distribution.png
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,510 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,511 - root - INFO - MAE: 10.31
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,511 - root - INFO - RMSE: 13.41
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,511 - root - INFO - MSE: 179.90
+2025-03-28 17:44:47 - OUTPUT: 
+2025-03-28 17:44:47 - OUTPUT: Evaluating localities:  67%|######6   | 10/15 [00:13<00:06,  1.33s/it]2025-03-28 17:44:47,512 - root - INFO - Evaluating locality: Powai
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,512 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,515 - root - INFO - Found 12 nearby localities for Powai
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,515 - root - INFO -   - Airport: 5.45 km, weight: 0.0656
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,515 - root - INFO -   - Andheri: 6.41 km, weight: 0.0405
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,515 - root - INFO -   - Kurla: 6.57 km, weight: 0.0374
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,515 - root - INFO -   - Vile Parle: 6.98 km, weight: 0.0305
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,515 - root - INFO -   - Vileparle: 6.98 km, weight: 0.0304
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,515 - root - INFO -   - Chembur: 7.14 km, weight: 0.0281
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,515 - root - INFO -   - Mulund: 7.84 km, weight: 0.0198
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,515 - root - INFO -   - Juhu: 8.50 km, weight: 0.0143
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,516 - root - INFO -   - Sion: 9.24 km, weight: 0.0099
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,516 - root - INFO -   - Dharavi: 9.69 km, weight: 0.0079
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,516 - root - INFO -   - Malad: 9.74 km, weight: 0.0077
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,516 - root - INFO -   - Bandra: 9.98 km, weight: 0.0068
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,516 - root - INFO - Initializing LSTM Predictor for Powai
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,516 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,516 - root - INFO - Loading cleaned data from spatial_cleaned_data\Powai_spatial_weighted.csv
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,526 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,527 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,528 - root - INFO - Loaded cleaned data with shape: (5425, 4)
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,528 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,528 - root - INFO - Train data shape: (4340, 4), Test data shape: (1085, 4)
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,528 - root - INFO - Loading existing model for Powai
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,699 - root - INFO - Evaluating predictions for Powai
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,699 - root - INFO - Preparing sequences from data with shape: (1085, 4)
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,711 - root - INFO - Creating 1056 sequences...
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,714 - root - INFO - Sequence preparation completed. X shape: (1056, 24, 22), y shape: (1056, 6)
+2025-03-28 17:44:47 - OUTPUT: 2025-03-28 17:44:47,714 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,279 - root - INFO - Evaluation completed in 0.58 seconds
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,279 - root - INFO - Evaluation metrics - MAE: 5.88, RMSE: 8.30
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,852 - root - INFO - Plots saved to plots/distance_Powai_predictions.png and plots/distance_Powai_error_distribution.png
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,853 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,853 - root - INFO - MAE: 5.88
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,853 - root - INFO - RMSE: 8.30
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,853 - root - INFO - MSE: 68.85
+2025-03-28 17:44:48 - OUTPUT: 
+2025-03-28 17:44:48 - OUTPUT: Evaluating localities:  73%|#######3  | 11/15 [00:15<00:05,  1.33s/it]2025-03-28 17:44:48,855 - root - INFO - Evaluating locality: Sion
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,855 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO - Found 12 nearby localities for Sion
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Dharavi: 0.54 km, weight: 0.7628
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Bandra: 2.60 km, weight: 0.2723
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Kurla: 2.71 km, weight: 0.2574
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Chembur: 3.76 km, weight: 0.1522
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Dadar: 3.79 km, weight: 0.1501
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Airport: 4.77 km, weight: 0.0919
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Worli: 6.12 km, weight: 0.0468
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Vileparle: 6.25 km, weight: 0.0440
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Vile Parle: 6.25 km, weight: 0.0440
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Juhu: 7.68 km, weight: 0.0215
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,858 - root - INFO -   - Andheri: 8.29 km, weight: 0.0158
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,859 - root - INFO -   - Powai: 9.24 km, weight: 0.0099
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,859 - root - INFO - Initializing LSTM Predictor for Sion
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,859 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,859 - root - INFO - Loading cleaned data from spatial_cleaned_data\Sion_spatial_weighted.csv
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,869 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,869 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,869 - root - INFO - Loaded cleaned data with shape: (5305, 4)
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,869 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,870 - root - INFO - Train data shape: (4244, 4), Test data shape: (1061, 4)
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,870 - root - INFO - Loading existing model for Sion
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,989 - root - INFO - Evaluating predictions for Sion
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,989 - root - INFO - Preparing sequences from data with shape: (1061, 4)
+2025-03-28 17:44:48 - OUTPUT: 2025-03-28 17:44:48,999 - root - INFO - Creating 1032 sequences...
+2025-03-28 17:44:49 - OUTPUT: 2025-03-28 17:44:49,001 - root - INFO - Sequence preparation completed. X shape: (1032, 24, 22), y shape: (1032, 6)
+2025-03-28 17:44:49 - OUTPUT: 2025-03-28 17:44:49,002 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:49 - OUTPUT: 2025-03-28 17:44:49,887 - root - INFO - Evaluation completed in 0.90 seconds
+2025-03-28 17:44:49 - OUTPUT: 2025-03-28 17:44:49,887 - root - INFO - Evaluation metrics - MAE: 4.38, RMSE: 5.61
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,226 - root - INFO - Plots saved to plots/distance_Sion_predictions.png and plots/distance_Sion_error_distribution.png
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,227 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,227 - root - INFO - MAE: 4.38
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,227 - root - INFO - RMSE: 5.61
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,227 - root - INFO - MSE: 31.47
+2025-03-28 17:44:50 - OUTPUT: 
+2025-03-28 17:44:50 - OUTPUT: Evaluating localities:  80%|########  | 12/15 [00:16<00:04,  1.35s/it]2025-03-28 17:44:50,228 - root - INFO - Evaluating locality: Vasai
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,228 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,231 - root - INFO - Found 0 nearby localities for Vasai
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,231 - root - INFO - Initializing LSTM Predictor for Vasai
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,231 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,232 - root - INFO - Loading cleaned data from spatial_cleaned_data\Vasai_spatial_weighted.csv
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,240 - root - WARNING - Data still contains NaN values. Filling with forward and backward fill.
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,241 - root - INFO - Loaded cleaned data with shape: (5425, 4)
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,241 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,241 - root - INFO - Train data shape: (4340, 4), Test data shape: (1085, 4)
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,241 - root - INFO - Loading existing model for Vasai
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,386 - root - INFO - Evaluating predictions for Vasai
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,387 - root - INFO - Preparing sequences from data with shape: (1085, 4)
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,399 - root - INFO - Creating 1056 sequences...
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,401 - root - INFO - Sequence preparation completed. X shape: (1056, 24, 22), y shape: (1056, 6)
+2025-03-28 17:44:50 - OUTPUT: 2025-03-28 17:44:50,402 - root - INFO - Sequence preparation took 0.02 seconds
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,021 - root - INFO - Evaluation completed in 0.63 seconds
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,021 - root - INFO - Evaluation metrics - MAE: 8.41, RMSE: 12.44
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,366 - root - INFO - Plots saved to plots/distance_Vasai_predictions.png and plots/distance_Vasai_error_distribution.png
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,367 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,367 - root - INFO - MAE: 8.41
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,368 - root - INFO - RMSE: 12.44
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,368 - root - INFO - MSE: 154.71
+2025-03-28 17:44:51 - OUTPUT: 
+2025-03-28 17:44:51 - OUTPUT: Evaluating localities:  87%|########6 | 13/15 [00:17<00:02,  1.28s/it]2025-03-28 17:44:51,368 - root - INFO - Evaluating locality: Vileparle
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,369 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO - Found 12 nearby localities for Vileparle
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Vile Parle: 0.00 km, weight: 0.9994
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Juhu: 1.90 km, weight: 0.3859
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Andheri: 2.21 km, weight: 0.3318
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Airport: 2.54 km, weight: 0.2804
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Bandra: 4.99 km, weight: 0.0826
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Kurla: 5.34 km, weight: 0.0694
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Sion: 6.25 km, weight: 0.0440
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Dharavi: 6.33 km, weight: 0.0423
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Powai: 6.98 km, weight: 0.0304
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Chembur: 7.56 km, weight: 0.0228
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Dadar: 9.10 km, weight: 0.0106
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,372 - root - INFO -   - Malad: 9.62 km, weight: 0.0081
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,373 - root - INFO - Initializing LSTM Predictor for Vileparle
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,373 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,373 - root - INFO - Loading cleaned data from spatial_cleaned_data\Vileparle_spatial_weighted.csv
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,382 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,382 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,382 - root - INFO - Loaded cleaned data with shape: (5305, 4)
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,382 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,383 - root - INFO - Train data shape: (4244, 4), Test data shape: (1061, 4)
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,383 - root - INFO - Loading existing model for Vileparle
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,541 - root - INFO - Evaluating predictions for Vileparle
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,542 - root - INFO - Preparing sequences from data with shape: (1061, 4)
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,554 - root - INFO - Creating 1032 sequences...
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,557 - root - INFO - Sequence preparation completed. X shape: (1032, 24, 22), y shape: (1032, 6)
+2025-03-28 17:44:51 - OUTPUT: 2025-03-28 17:44:51,557 - root - INFO - Sequence preparation took 0.01 seconds
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,438 - root - INFO - Evaluation completed in 0.90 seconds
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,439 - root - INFO - Evaluation metrics - MAE: 8.42, RMSE: 11.39
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,781 - root - INFO - Plots saved to plots/distance_Vileparle_predictions.png and plots/distance_Vileparle_error_distribution.png
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,782 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,782 - root - INFO - MAE: 8.42
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,782 - root - INFO - RMSE: 11.39
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,782 - root - INFO - MSE: 129.66
+2025-03-28 17:44:52 - OUTPUT: 
+2025-03-28 17:44:52 - OUTPUT: Evaluating localities:  93%|#########3| 14/15 [00:19<00:01,  1.32s/it]2025-03-28 17:44:52,782 - root - INFO - Evaluating locality: Worli
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,782 - root - INFO - Loaded coordinates for 26 localities
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO - Found 8 nearby localities for Worli
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO -   - Dadar: 2.79 km, weight: 0.2484
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO -   - Bandra: 5.33 km, weight: 0.0697
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO -   - Dharavi: 5.60 km, weight: 0.0608
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO -   - Malabar Hill: 6.12 km, weight: 0.0468
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO -   - Sion: 6.12 km, weight: 0.0468
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO -   - Kurla: 8.80 km, weight: 0.0123
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO -   - Chembur: 9.67 km, weight: 0.0079
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO -   - Airport: 9.97 km, weight: 0.0068
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO - Initializing LSTM Predictor for Worli
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,786 - root - INFO - Sequence length: 24, Prediction horizon: 6
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,787 - root - INFO - Loading cleaned data from spatial_cleaned_data\Worli_spatial_weighted.csv
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,800 - root - INFO - Using spatial data from nearby localities to fill any remaining missing values
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,801 - root - INFO - No missing PM2.5 values found
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,801 - root - INFO - Loaded cleaned data with shape: (5425, 4)
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,801 - root - INFO - Features selected: ['PM10', 'RH', 'AT']
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,802 - root - INFO - Train data shape: (4340, 4), Test data shape: (1085, 4)
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,802 - root - INFO - Loading existing model for Worli
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,941 - root - INFO - Evaluating predictions for Worli
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,941 - root - INFO - Preparing sequences from data with shape: (1085, 4)
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,954 - root - INFO - Creating 1056 sequences...
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,958 - root - INFO - Sequence preparation completed. X shape: (1056, 24, 22), y shape: (1056, 6)
+2025-03-28 17:44:52 - OUTPUT: 2025-03-28 17:44:52,958 - root - INFO - Sequence preparation took 0.02 seconds
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,547 - root - INFO - Evaluation completed in 0.61 seconds
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,547 - root - INFO - Evaluation metrics - MAE: 5.73, RMSE: 8.47
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,893 - root - INFO - Plots saved to plots/distance_Worli_predictions.png and plots/distance_Worli_error_distribution.png
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,893 - root - INFO - Final Evaluation Results:
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,893 - root - INFO - MAE: 5.73
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,893 - root - INFO - RMSE: 8.47
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,893 - root - INFO - MSE: 71.75
+2025-03-28 17:44:53 - OUTPUT: 
+2025-03-28 17:44:53 - OUTPUT: Evaluating localities: 100%|##########| 15/15 [00:20<00:00,  1.26s/it]
+2025-03-28 17:44:53 - OUTPUT: Evaluating localities: 100%|##########| 15/15 [00:20<00:00,  1.35s/it]
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,895 - root - INFO -
+2025-03-28 17:44:53 - OUTPUT: Results (sorted by RMSE):
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,895 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,895 - root - INFO - | Locality   |     MAE |    RMSE |      MSE | Status   |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,895 - root - INFO - +============+=========+=========+==========+==========+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,895 - root - INFO - | Colaba     |  1.9895 |  4.0827 |  16.6681 | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - | Sion       |  4.3795 |  5.6097 |  31.4687 | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - | Powai      |  5.8827 |  8.2978 |  68.854  | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - | Worli      |  5.7296 |  8.4705 |  71.7501 | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - | Airport    |  6.5582 |  8.503  |  72.3016 | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - | Borivali   |  5.9511 |  9.143  |  83.5937 | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,896 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - | Mulund     |  7.2032 |  9.6101 |  92.3533 | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - | Vileparle  |  8.417  | 11.3867 | 129.657  | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - | Vasai      |  8.4115 | 12.4383 | 154.713  | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - | Bandra     |  9.4693 | 12.763  | 162.894  | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - | Kandivali  |  8.915  | 12.9179 | 166.872  | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - | Mahape     |  9.7834 | 13.4124 | 179.892  | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - | Nerul      | 10.309  | 13.4127 | 179.902  | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - | Kalyan     | 12.3084 | 16.9348 | 286.786  | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - | Kurla      | 10.3991 | 23.726  | 562.924  | Success  |
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - +------------+---------+---------+----------+----------+
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - ERROR - Error generating results table: __main__.custom_print() got multiple values for keyword argument 'file'
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO -
+2025-03-28 17:44:53 - OUTPUT: Average metrics across 15 localities:
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - Average MAE: 7.7138
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - Average RMSE: 11.3806
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,897 - root - INFO - Average MSE: 150.7085
+2025-03-28 17:44:53 - OUTPUT: 2025-03-28 17:44:53,898 - root - INFO - Evaluation complete
+2025-03-28 17:44:54 - Evaluation completed with return code: 0
