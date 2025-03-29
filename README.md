@@ -8,6 +8,7 @@ Roll number: 233562458
 
 IITK email: nambiarpv23@iitk.ac.in
 
+Mentor: Vipul Arora
 
 # 2022_SSDA_airquality_data_description
 
